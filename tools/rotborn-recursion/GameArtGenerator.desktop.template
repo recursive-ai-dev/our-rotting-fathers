@@ -1,0 +1,34 @@
+[Desktop Entry]
+# Desktop file for GameArtGenerator
+# Place in /usr/share/applications/GameArtGenerator.desktop for system-wide installation
+# Or in ~/.local/share/applications/ for user-only installation
+
+# Required fields
+Version=1.0
+Type=Application
+
+# Display name and description
+Name=2D Game Art Generator
+Comment=Procedural pixel art sprite generator for game development
+
+# Command to execute
+Exec=GameArtGenerator
+
+# Icon name (should exist in /usr/share/icons/hicolor/*/apps/GameArtGenerator.png)
+Icon=GameArtGenerator
+
+# Whether to run in terminal (false for GUI apps)
+Terminal=false
+
+# Application categories (helps with categorization in menus)
+Categories=Graphics;Development;
+
+# Optional but recommended fields
+Keywords=pixel;art;sprite;generator;procedural;game;animation;
+
+# Additional metadata
+X-AppStream-Ignore=false
+StartupNotify=true
+
+# Mimetypes if supporting file associations (optional for future enhancement)
+# MimeType=application/x-gameart;

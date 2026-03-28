@@ -1,0 +1,169 @@
+# Template for pyproject.toml - RENAME to pyproject.toml when ready to use
+# This file defines package metadata, dependencies, entry points, and build system
+
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+# Basic metadata
+name = "GameArtGenerator"
+version = "2.0.0"
+description = "Procedural 2D pixel art sprite generator with PyQt6 GUI - generates mathematically unique humans across complete spectrum of diversity"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+
+# Author and contributor information
+authors = [
+    {name = "AI Creativity Demonstration"},
+]
+
+# Package classification (PyPI categories)
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Environment :: X11 Applications :: Qt",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: Apache Software License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Graphics :: Viewers",
+    "Topic :: Games/Entertainment",
+]
+
+# Python version requirement
+requires-python = ">=3.8"
+
+# Core dependencies (production)
+dependencies = [
+    "Pillow>=10.0.0",
+    "numpy>=1.20.0",
+    "PyQt6>=6.5.0",
+    "scipy>=1.10.0",
+]
+
+# URLs
+[project.urls]
+Homepage = "https://github.com/YOUR_USERNAME/swarm-gen-game-art"
+Documentation = "https://github.com/YOUR_USERNAME/swarm-gen-game-art/blob/main/README.md"
+Repository = "https://github.com/YOUR_USERNAME/swarm-gen-game-art.git"
+"Bug Tracker" = "https://github.com/YOUR_USERNAME/swarm-gen-game-art/issues"
+
+# Optional dependencies for development and features
+[project.optional-dependencies]
+# Development tools (testing, code quality)
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=22.0",
+    "flake8>=4.0",
+    "isort>=5.0",
+    "mypy>=0.990",
+]
+
+# Documentation building (if you want Sphinx docs)
+docs = [
+    "sphinx>=4.0",
+    "sphinx-rtd-theme>=1.0",
+]
+
+# GUI enhancement (optional)
+gui-extras = [
+    "PyQtWebEngine>=6.5.0",  # For future web-based features
+]
+
+# Entry points - GUI application launcher
+[project.gui-scripts]
+GameArtGenerator = "app.main:main"
+
+# Also create a command-line script if needed
+[project.scripts]
+gameart-generate = "ai_human_generator:main"
+
+# Build system configuration (setuptools)
+[tool.setuptools]
+# Explicit package discovery (alternative: use find)
+packages = ["app", "export", "generator", "tests"]
+
+[tool.setuptools.package-data]
+# Include package-internal files if any (usually empty for pure Python)
+generator = ["py.typed"]
+app = ["py.typed"]
+
+# Tool-specific configurations
+
+# Black (code formatter)
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+# isort (import sorting)
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_mode = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+
+# mypy (static type checking)
+[tool.mypy]
+python_version = "3.8"
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_unused_configs = true
+
+# pytest (testing)
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --strict-markers --tb=short"
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+
+# Coverage (test coverage reporting)
+[tool.coverage.run]
+source = ["app", "export", "generator"]
+omit = [
+    "*/__pycache__/*",
+    "*/site-packages/*",
+    "*/tests/*",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+    "if TYPE_CHECKING:",
+    "if sys.version_info",
+]
