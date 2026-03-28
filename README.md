@@ -5,8 +5,11 @@
 **A narrative-driven dark fantasy turn-based RPG set on the colossal corpse of a rotting god**
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Python](https://img.shields.io/badge/python-3.8+-green.svg)
+![Godot](https://img.shields.io/badge/Godot-4.2+-purple.svg)
+![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![Status](https://img.shields.io/badge/status-in%20development-yellow.svg)
+
+[Setup Guide](DEVELOPMENT.md) • [Tech Stack](conductor/tech-stack.md) • [Lore](conductor/lore/)
 
 </div>
 
@@ -86,8 +89,7 @@ Located in `tools/rotborn-recursion/`, this is our procedural content generation
 
 **Quick Start**:
 ```bash
-cd tools/rotborn-recursion
-python ai_human_generator.py
+just generate-sprites
 ```
 
 See [`tools/rotborn-recursion/README.md`](tools/rotborn-recursion/README.md) for detailed documentation.
@@ -98,35 +100,61 @@ See [`tools/rotborn-recursion/README.md`](tools/rotborn-recursion/README.md) for
 
 ```
 our-rotting-father-rpg/
-├── conductor/              # Project management & documentation
-│   ├── product.md          # Product definition & vision
-│   ├── tech-stack.md       # Technical architecture
-│   ├── workflow.md         # Development workflow
-│   ├── code_styleguides/   # Coding standards
-│   ├── lore/               # World lore & story documents
-│   └── tracks/             # Development tracks & plans
-└── tools/
-    └── rotborn-recursion/  # Procedural content generation
-        ├── generator/      # Sprite generation engine
-        ├── app/            # Application UI
-        ├── tests/          # Test suite
-        └── scripts/        # Utility scripts
+├── justfile                # Build commands (https://just.systems)
+├── package.json            # npm scripts
+├── DEVELOPMENT.md          # Full setup guide
+├── game/godot/             # Godot 4.x game project
+│   ├── project.godot
+│   ├── scenes/
+│   ├── scripts/autoload/
+│   └── assets/
+├── tools/rotborn-recursion/ # Python content generation
+│   ├── generator/
+│   ├── export_to_godot.py  # Asset pipeline
+│   └── tests/
+├── conductor/              # Project management
+│   ├── product.md
+│   ├── tech-stack.md
+│   └── tracks/
+└── .github/workflows/      # CI/CD (GitHub Actions)
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### Prerequisites
-- **Python 3.8+**
-- **Git**
+### Quick Start (Recommended)
 
-### Installation
+**1. Install `just` command runner:**
+```bash
+# macOS
+brew install just
+
+# Linux
+curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to ~/bin
+
+# Windows
+winget install just
+```
+
+**2. Setup and run:**
+```bash
+git clone https://github.com/recursive-ai-dev/our-rotting-fathers.git
+cd our-rotting-fathers
+just setup        # Install all dependencies
+just godot        # Open Godot editor
+```
+
+See **[DEVELOPMENT.md](DEVELOPMENT.md)** for the complete setup guide.
+
+---
+
+### Manual Installation
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/recursive-ai-dev/our-rotting-father-rpg.git
-cd our-rotting-father-rpg
+git clone https://github.com/recursive-ai-dev/our-rotting-fathers.git
+cd our-rotting-fathers
 ```
 
 2. **Set up Rotborn Recursion Engine**

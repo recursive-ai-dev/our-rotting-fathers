@@ -1,0 +1,196 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+  workflow_dispatch:
+    inputs:
+      deploy_web:
+        description: 'Deploy to GitHub Pages'
+        required: false
+        default: 'false'
+
+jobs:
+  # =============================================================================
+  # Python Tests (Rotborn Recursion Tools)
+  # =============================================================================
+  test-python:
+    name: Test Python Tools
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Install dependencies
+        run: |
+          cd tools/rotborn-recursion
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest black flake8 mypy
+      
+      - name: Lint Python
+        run: |
+          cd tools/rotborn-recursion
+          flake8 generator/ app/ tests/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          black --check generator/ app/ tests/
+      
+      - name: Run Python tests
+        run: |
+          cd tools/rotborn-recursion
+          python -m pytest tests/ -v --tb=short
+  
+  # =============================================================================
+  # Godot Tests
+  # =============================================================================
+  test-godot:
+    name: Test Godot Project
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Godot
+        run: |
+          mkdir -p ~/.local/share/godot
+          cp -r /root/.local/share/godot/* ~/.local/share/godot/ || true
+      
+      - name: Run Godot tests
+        run: |
+          cd game/godot
+          godot --headless --quit || true
+  
+  # =============================================================================
+  # Web Build
+  # =============================================================================
+  build-web:
+    name: Build Web Export
+    runs-on: ubuntu-latest
+    needs: [test-python]
+    container:
+      image: barichello/godot-ci:4.2.1
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Godot
+        run: |
+          mkdir -p ~/.local/share/godot
+          cp -r /root/.local/share/godot/* ~/.local/share/godot/ || true
+      
+      - name: Create export presets
+        run: |
+          mkdir -p build/web
+          # Export preset will be created by Godot editor first time
+      
+      - name: Build Web
+        run: |
+          cd game/godot
+          godot --headless --export-release "Web" ../../build/web/index.html
+      
+      - name: Upload web artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-build
+          path: build/web/
+          retention-days: 7
+  
+  # =============================================================================
+  # Linux Build
+  # =============================================================================
+  build-linux:
+    name: Build Linux Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Godot
+        run: |
+          mkdir -p ~/.local/share/godot
+          cp -r /root/.local/share/godot/* ~/.local/share/godot/ || true
+      
+      - name: Build Linux
+        run: |
+          cd game/godot
+          mkdir -p ../../build/linux
+          godot --headless --export-release "Linux" ../../build/linux/our-rotting-father.x86_64
+      
+      - name: Upload Linux artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: build/linux/
+          retention-days: 7
+  
+  # =============================================================================
+  # Windows Build
+  # =============================================================================
+  build-windows:
+    name: Build Windows Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:4.2.1
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Godot
+        run: |
+          mkdir -p ~/.local/share/godot
+          cp -r /root/.local/share/godot/* ~/.local/share/godot/ || true
+      
+      - name: Build Windows
+        run: |
+          cd game/godot
+          mkdir -p ../../build/windows
+          godot --headless --export-release "Windows" ../../build/windows/our-rotting-father.exe
+      
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: build/windows/
+          retention-days: 7
+  
+  # =============================================================================
+  # Deploy to GitHub Pages
+  # =============================================================================
+  deploy-web:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest
+    needs: [build-web]
+    if: github.event_name == 'workflow_dispatch' && github.event.inputs.deploy_web == 'true' || github.ref == 'refs/heads/master'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Download web build
+        uses: actions/download-artifact@v4
+        with:
+          name: web-build
+          path: build/web/
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: build/web/
+          publish_branch: gh-pages
+          force_orphan: true

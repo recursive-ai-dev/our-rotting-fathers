@@ -1,0 +1,38 @@
+{
+  "name": "our-rotting-father-rpg",
+  "version": "0.1.0",
+  "description": "A narrative-driven dark fantasy turn-based RPG set on the colossal corpse of a rotting god",
+  "private": true,
+  "scripts": {
+    "dev": "just run",
+    "build": "just build-all",
+    "build:web": "just build-web",
+    "build:linux": "just build-linux",
+    "build:windows": "just build-windows",
+    "build:macos": "just build-macos",
+    "generate": "just generate-all",
+    "generate:sprites": "just generate-sprites",
+    "generate:animations": "just generate-animations",
+    "test": "just test",
+    "test:python": "just test-python",
+    "test:godot": "just test-godot",
+    "lint": "just lint",
+    "clean": "just clean-all",
+    "deploy": "just deploy-web",
+    "godot": "just godot"
+  },
+  "keywords": [
+    "rpg",
+    "godot",
+    "dark-fantasy",
+    "turn-based",
+    "webgl",
+    "pwa"
+  ],
+  "author": "recursive-ai-dev",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0",
+    "wait-on": "^7.2.0"
+  }
+}
