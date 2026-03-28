@@ -180,7 +180,7 @@ The Purified are **honest**. They see the rot. They see the horror. They choose 
 - Purified agents operate openly in Architect territory (they are not deluded; they are... differently deluded)
 - When a Purified's delusion fails (they realize they cannot be pure), the Architects are there: *"You see now. Purity was a lie. But you can choose a **better** lie."*
 
-### Architects vs. Rotborn Embrace
+### Architects vs. Rotborn
 
 **Status: Ideological Opposition**
 

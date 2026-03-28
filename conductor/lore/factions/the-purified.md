@@ -169,7 +169,7 @@ Purified architecture is not designed to shelter the living. It is designed to *
 
 ## Relationships with Other Factions
 
-### The Purified vs. Rotborn Embrace
+### The Purified vs. Rotborn
 
 **Status: Existential War**
 

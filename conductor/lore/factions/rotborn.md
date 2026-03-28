@@ -1,10 +1,10 @@
-# Rotborn Embrace
+# Rotborn
 
 ## Overview
 
 **"The rot is not death. The rot is womb."**
 
-The Rotborn Embrace do not merely accept the rot—they **worship** it. To them, the decaying flesh of the god is not a corpse but a cradle. Mutation is not disease; it is **divine transformation**. They open their flesh to spores, welcome the worms as siblings, and scream in ecstasy as their bones reshape.
+The Rotborn do not merely accept the rot—they **worship** it. To them, the decaying flesh of the god is not a corpse but a cradle. Mutation is not disease; it is **divine transformation**. They open their flesh to spores, welcome the worms as siblings, and scream in ecstasy as their bones reshape.
 
 They are the only faction that has looked upon the horror of this world and said: *"This is not a curse. This is a gift. And we will bear its children."*
 
@@ -210,7 +210,7 @@ The God's Nervous System are **siblings**—but misguided ones. They implant spo
 
 ### The First Womb
 
-**Title:** Supreme Leader of the Rotborn Embrace  
+**Title:** Supreme Leader of the Rotborn  
 **Age:** Irrelevant (time is measured in pregnancies, not years)  
 **Appearance:** A massively pregnant form, belly distended, skin translucent. Through the skin, something moves—too many limbs, too many eyes, a face that is not a face. The belly pulses with its own heartbeat. The First Womb's own body is secondary: a vessel for what grows inside. Breasts leak milk that glows with spore-light. Hips widened beyond human proportion. When they walk, the ground trembles.
 

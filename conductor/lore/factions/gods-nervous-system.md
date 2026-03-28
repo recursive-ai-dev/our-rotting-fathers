@@ -197,7 +197,7 @@ The Architects are... colleagues. They build fictions. The System provides the r
 - Joint projects: System provides memories. Architects provide structure. Together, they build... bearable realities.
 - Disagreements are settled through... resonance. Both sides sync. Both sides fire. The winning pattern becomes... real.
 
-### System vs. Rotborn Embrace
+### System vs. Rotborn
 
 **Status: Religious Schism**
 
