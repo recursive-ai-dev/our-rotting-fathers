@@ -1,0 +1,104 @@
+# -*- mode: python ; coding: utf-8 -*-
+# PyInstaller spec file for GameArtGenerator
+# Usage: pyinstaller GameArtGenerator.spec --distpath ./dist
+#
+# This spec file configures PyInstaller to bundle the PyQt6 application
+# with all dependencies into a single executable or app bundle.
+
+from PyInstaller.utils.hooks import collect_submodules, collect_data_files
+import sys
+
+# Name of the application
+APP_NAME = 'GameArtGenerator'
+APP_VERSION = '2.0.0'
+
+block_cipher = None
+
+# Collect all PyQt6 data and submodules (required for PyQt6 to work)
+pyqt6_data = collect_data_files('PyQt6')
+pyqt6_imports = collect_submodules('PyQt6')
+
+a = Analysis(
+    ['run_app.py'],
+    pathex=[],
+    binaries=[],
+    # Include PyQt6 data files (UI frameworks, plugins, translations)
+    datas=pyqt6_data,
+    # Hidden imports that PyInstaller doesn't detect automatically
+    hiddenimports=pyqt6_imports + [
+        'app',
+        'app.main',
+        'app.main_window',
+        'app.models',
+        'app.models.character_model',
+        'app.widgets',
+        'app.widgets.character_preview',
+        'app.widgets.generation_controls',
+        'app.widgets.animation_player',
+        'app.widgets.export_panel',
+        'app.widgets.bg_removal_panel',
+        'app.widgets.direction_selector',
+        'app.utils',
+        'app.utils.bg_removal',
+        'generator',
+        'generator.pure_generator',
+        'generator.animation_generator',
+        'generator.direction_renderer',
+        'generator.animation_types',
+        'generator.mass_generator',
+        'generator.swarm_generator',
+        'export',
+        'export.sheet_builder',
+        'export.apng_exporter',
+        'export.individual_exporter',
+    ],
+    hookspath=[],
+    hooksconfig={},
+    runtime_hooks=[],
+    excludedimports=[],
+    win_no_prefer_redirects=False,
+    win_private_assemblies=False,
+    cipher=block_cipher,
+    noarchive=False,
+)
+
+pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
+
+# Build executable
+exe = EXE(
+    pyz,
+    a.scripts,
+    a.binaries,
+    a.zipfiles,
+    a.datas,
+    [],
+    name=APP_NAME,
+    debug=False,
+    bootloader_ignore_signals=False,
+    strip=False,
+    upx=True,
+    upx_exclude=[],
+    runtime_tmpdir=None,
+    console=False,  # GUI app: no console window on Windows
+    disable_windowed_traceback=False,
+    # Icon file (Windows .ico, or PNG for other platforms)
+    # Uncomment when you have the icon file:
+    # icon='assets/GameArtGenerator.ico',
+    target_arch=None,
+    codesign_identity=None,
+    entitlements_file=None,
+    argv_emulation=False,
+)
+
+# macOS-specific bundle creation
+if sys.platform == 'darwin':
+    app = BUNDLE(
+        exe,
+        name=f'{APP_NAME}.app',
+        icon='assets/GameArtGenerator.icns',
+        bundle_identifier='com.gameart.generator',
+        info_plist={
+            'NSPrincipalClass': 'NSApplication',
+            'NSHighResolutionCapable': 'True',
+        },
+    )

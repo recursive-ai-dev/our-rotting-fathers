@@ -1,0 +1,109 @@
+; Inno Setup installer configuration for GameArtGenerator
+; This script configures an Windows installer (.exe) using Inno Setup
+;
+; Install Inno Setup from: https://jrsoftware.org/isdl.php
+; Then build installer: iscc.exe GameArtGenerator.iss
+;
+; Output: GameArtGenerator-2.0.0-setup.exe
+
+#define MyAppName "2D Game Art Generator"
+#define MyAppVersion "2.0.0"
+#define MyAppPublisher "AI Creativity Team"
+#define MyAppURL "https://github.com/YOUR_USERNAME/swarm-gen-game-art"
+#define MyAppExeName "GameArtGenerator.exe"
+#define SourceDir "dist"
+
+[Setup]
+; Compiler directives
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+AppPublisherURL={#MyAppURL}
+AppSupportURL={#MyAppURL}
+AppUpdatesURL={#MyAppURL}
+
+; Default installation folder: C:\Program Files\GameArtGenerator\
+DefaultDirName={autopf}\GameArtGenerator
+DefaultGroupName={#MyAppName}
+
+; Setup UI
+SetupIconFile={#SourceDir}\GameArtGenerator.exe
+WizardStyle=modern
+WizardImageFile=WizardImage.bmp
+WizardSmallImageFile=WizardSmallImage.bmp
+
+; Output directory and filename
+OutputDir=.\dist
+OutputBaseFilename=GameArtGenerator-{#MyAppVersion}-setup
+
+; License agreement
+LicenseFile=LICENSE
+
+; Compression
+Compression=lzma2
+SolidCompression=yes
+
+; Windows version requirement (Windows 10+)
+MinVersion=10.0
+
+; 64-bit support
+ArchitecturesAllowed=x64
+ArchitecturesInstallIn64BitMode=x64
+
+; Run installer with elevated privileges
+PrivilegesRequired=admin
+
+; Other options
+DisableWelcomePage=no
+DisableProgramGroupPage=no
+AllowUNCPath=no
+UninstallDisplayIcon={app}\{#MyAppExeName}
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+
+[Tasks]
+; Create desktop shortcut
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+
+; Create quick-launch icon (Windows 7 and earlier)
+Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 6.1
+
+[Files]
+; Copy executable and dependencies
+Source: "{#SourceDir}\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
+
+; Copy README and LICENSE
+Source: "README.md"; DestDir: "{app}"; Flags: isreadme ignoreversion
+
+Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion
+
+[Icons]
+; Start Menu shortcut
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
+
+; Desktop shortcut (if task selected)
+Name: "{desktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
+; Quick Launch shortcut (if task selected, Windows 7 and earlier)
+Name: "{userappdata}\Microsoft\Internet Explorer\Quick Launch\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: quicklaunchicon
+
+[Run]
+; Run application after installation (optional)
+Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
+
+[Registry]
+; Optional: Register file association (if adding support for .gameart files)
+; Root: HKLM; Subkey: "Software\Classes\.gameart"; ValueType: string; ValueData: "GameArtFile"; Flags: uninsdeletevalue
+
+; Create uninstall registry entry
+Root: HKCU; Subkey: "Software\{#MyAppName}"; Flags: uninsdeletekey
+
+[Code]
+{ Optional: Custom code for pre/post install hooks }
+
+procedure CurPageChanged(CurPageID: Integer);
+begin
+  { You can add custom logic here if needed }
+end;

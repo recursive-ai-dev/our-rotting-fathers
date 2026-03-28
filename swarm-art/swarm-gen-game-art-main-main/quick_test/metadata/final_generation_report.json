@@ -1,0 +1,95 @@
+{
+  "generation_complete": true,
+  "total_characters_generated": 20,
+  "total_unique_combinations": 20,
+  "duplicates_avoided": 0,
+  "generation_stats": {
+    "total_generated": 20,
+    "unique_count": 20,
+    "duplicates_avoided": 0,
+    "by_skin_tone": {},
+    "by_hair_style": {
+      "styled_long": 1,
+      "designer_short": 2,
+      "basic_short": 4,
+      "short": 2,
+      "ponytail": 1,
+      "professional": 1,
+      "side_part": 1,
+      "glamour_waves": 2,
+      "layered": 1,
+      "unkempt_long": 1,
+      "neat_short": 1,
+      "crew_cut": 1,
+      "short_rough": 1,
+      "styled_back": 1
+    },
+    "by_face_style": {
+      "detailed": 10,
+      "minimal": 6,
+      "basic": 4
+    },
+    "by_social_class": {
+      "middle": 4,
+      "rich": 5,
+      "working": 7,
+      "poor": 3,
+      "upper": 1
+    },
+    "by_gender": {
+      "female": 9,
+      "male": 11
+    }
+  },
+  "diversity_final": {
+    "skin_tones_used": [
+      "(198, 145, 88)",
+      "(168, 117, 67)",
+      "(226, 183, 132)",
+      "(215, 169, 127)",
+      "(234, 192, 134)",
+      "(175, 125, 70)",
+      "(141, 85, 36)",
+      "(225, 180, 125)",
+      "(228, 185, 130)",
+      "(241, 194, 125)",
+      "(180, 130, 76)",
+      "(115, 65, 34)"
+    ],
+    "hair_colors_used": [
+      "(165, 42, 42)",
+      "(128, 128, 128)",
+      "(139, 90, 43)",
+      "(211, 211, 211)",
+      "(62, 39, 35)",
+      "(184, 151, 120)"
+    ],
+    "clothing_combos_used": [
+      "sweater_jeans",
+      "expensive_shirt_designer_jeans",
+      "dress_shirt_slacks",
+      "loose_shirt_skirt",
+      "expensive_shirt_expensive_pants",
+      "polo_khakis",
+      "basic_shirt_jeans",
+      "blouse_work_pants",
+      "nice_top_skirt",
+      "button_shirt_dress_pants",
+      "suit_jacket_expensive_pants",
+      "worn_tshirt_skirt",
+      "designer_blouse_luxury_dress",
+      "polo_work_pants",
+      "tank_top_skirt"
+    ],
+    "face_variations_used": [
+      "minimal_False_False",
+      "detailed_False_False",
+      "basic_False_False",
+      "minimal_True_False",
+      "minimal_False_True",
+      "detailed_True_False"
+    ]
+  },
+  "estimated_max_combinations": 338688000,
+  "uniqueness_ratio": 1.0
+}
