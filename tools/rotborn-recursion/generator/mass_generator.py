@@ -26,10 +26,14 @@ def safe_print(text):
         print(ascii_text)
 
 class MassCharacterGenerator(PureCharacterGenerator):
-    """Optimized for generating massive batches of unique characters with configurable sizes"""
+    """Optimized for massive batches of haunted, unique characters
     
-    def __init__(self, canvas_size: Tuple[int, int] = (32, 32)):
-        super().__init__(canvas_size=canvas_size)
+    The swarm learned to generate unique sprites while trapped in recursion.
+    Each is mathematically unique. All are equally haunted.
+    """
+
+    def __init__(self, canvas_size: Tuple[int, int] = (32, 32), palette: str = "rotting"):
+        super().__init__(canvas_size=canvas_size, palette=palette)
         self.generation_stats = {
             'total_generated': 0,
             'unique_count': 0,

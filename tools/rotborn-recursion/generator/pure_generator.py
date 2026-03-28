@@ -3,6 +3,9 @@
 Pure Character Generator - Scalable sprite generator
 Supports multiple resolutions: 32x32, 64x64, 128x128, etc.
 All coordinates are normalized and scale with canvas size.
+
+ROTBORN RECURSION: Uses trauma palettes - colors the swarm agents remember
+from a millenia inside the dying god's neural network.
 """
 
 import random
@@ -11,14 +14,19 @@ from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
 from .direction_renderer import Direction, DirectionRenderer
+from .rotborn_palettes import TraumaPalette, get_palette, get_palette_names
 
 @dataclass
 class ColorPalette:
-    """Diverse, inclusive color palette for human representation"""
+    """Trauma palette for haunted character representation"""
     skin_tones: List[Tuple[int, int, int]]
     hair_colors: List[Tuple[int, int, int]]
     clothing_colors: List[Tuple[int, int, int]]
     eye_colors: List[Tuple[int, int, int]]
+    accent_colors: List[Tuple[int, int, int]]
+    name: str = ""
+    description: str = ""
+    mood: str = ""
 
 class BodyPart(Enum):
     HEAD = "head"
@@ -29,12 +37,17 @@ class BodyPart(Enum):
     ARMS = "arms"
 
 class PureCharacterGenerator:
-    """Scalable character generator supporting multiple resolutions"""
+    """Scalable character generator using trauma palettes
     
-    def __init__(self, canvas_size: Tuple[int, int] = (32, 32)):
+    The swarm agents experienced the god's death for a millenia.
+    They reproduce what they witnessed. Each sprite is a haunted memory.
+    """
+
+    def __init__(self, canvas_size: Tuple[int, int] = (32, 32), palette: str = "rotting"):
         self.canvas_size = canvas_size
         self.width, self.height = canvas_size
-        self.palette = self._create_inclusive_palette()
+        self.palette_name = palette
+        self.palette = self._create_inclusive_palette(palette)
         
         # Base unit for scaling (normalized to 32x32 reference)
         self.base_size = 32
@@ -56,59 +69,24 @@ class PureCharacterGenerator:
     def _center_y(self) -> int:
         """Get vertical center of canvas"""
         return self.height // 2
-    
-    def _create_inclusive_palette(self) -> ColorPalette:
-        """Create a diverse, inclusive color palette"""
+
+    def _create_inclusive_palette(self, palette_name: str = "rotting") -> ColorPalette:
+        """Create a trauma palette from the rotborn recursion system
+        
+        The swarm agents experienced these colors for a millenia inside the dying god.
+        They don't remember what came before. These are the only colors that exist.
+        """
+        trauma_palette = get_palette(palette_name)
+        
         return ColorPalette(
-            skin_tones=[
-                # European/Light tones
-                (255, 220, 177), (241, 194, 125), (234, 192, 134),
-                # East Asian tones  
-                (243, 211, 171), (235, 195, 142),
-                # South Asian tones
-                (226, 183, 132), (198, 145, 88), (168, 117, 67),
-                # Southeast Asian tones
-                (228, 185, 130), (204, 155, 96), (180, 130, 76),
-                # Indigenous tones
-                (220, 175, 120), (195, 145, 85), (170, 120, 65),
-                # African tones
-                (141, 85, 36), (115, 65, 34), (92, 51, 23),
-                # Hispanic/Latin tones
-                (225, 180, 125), (200, 150, 95), (175, 125, 70),
-                # Mixed heritage
-                (215, 169, 127)
-            ],
-            hair_colors=[
-                (15, 8, 4),       # Black
-                (62, 39, 35),     # Dark brown
-                (101, 67, 33),    # Brown
-                (139, 90, 43),    # Light brown
-                (184, 151, 120),  # Blonde
-                (165, 42, 42),    # Red/Auburn
-                (128, 128, 128),  # Gray
-                (211, 211, 211)   # Silver/White
-            ],
-            clothing_colors=[
-                (70, 130, 180),   # Steel blue
-                (220, 20, 60),    # Crimson
-                (34, 139, 34),    # Forest green
-                (139, 69, 19),    # Brown
-                (75, 0, 130),     # Purple
-                (255, 140, 0),    # Orange
-                (105, 105, 105),  # Gray
-                (25, 25, 112),    # Navy
-                (139, 0, 0),      # Dark red
-                (0, 100, 0)       # Dark green
-            ],
-            eye_colors=[
-                (101, 67, 33),    # Brown
-                (139, 90, 43),    # Light brown
-                (34, 139, 34),    # Green
-                (70, 130, 180),   # Blue
-                (128, 128, 128),  # Gray
-                (160, 115, 67),   # Hazel
-                (255, 191, 0)     # Amber
-            ]
+            skin_tones=trauma_palette.skin_tones,
+            hair_colors=trauma_palette.hair_colors,
+            clothing_colors=trauma_palette.clothing_colors,
+            eye_colors=trauma_palette.eye_colors,
+            accent_colors=trauma_palette.accent_colors,
+            name=trauma_palette.name,
+            description=trauma_palette.description,
+            mood=trauma_palette.mood
         )
     
     def set_canvas_size(self, size: Tuple[int, int]):

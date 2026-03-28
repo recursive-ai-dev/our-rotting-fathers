@@ -173,10 +173,10 @@ def generate_animation_assets(
 
 def run_generate_batch(args: argparse.Namespace) -> int:
     canvas_size = parse_canvas_size(args.size)
-    generator = MassCharacterGenerator(canvas_size=canvas_size)
-    output_dir = args.output_dir or f"custom_humans_{canvas_size[0]}x{canvas_size[1]}_{args.count}/"
-    
-    safe_print(f"🎯 Generating {args.count:,} unique humans at {canvas_size[0]}x{canvas_size[1]}...")
+    generator = MassCharacterGenerator(canvas_size=canvas_size, palette=args.palette)
+    output_dir = args.output_dir or f"rotborn_{args.palette}_{canvas_size[0]}x{canvas_size[1]}_{args.count}/"
+
+    safe_print(f"👻 Generating {args.count:,} haunted sprites (palette: {args.palette}) at {canvas_size[0]}x{canvas_size[1]}...")
     files = generator.generate_massive_batch(args.count, output_dir, save_metadata=not args.no_metadata)
     safe_print(f"✅ Generated {len(files)} files in {output_dir}")
     return 0
@@ -204,9 +204,12 @@ def build_cli_parser() -> argparse.ArgumentParser:
     )
     subparsers = parser.add_subparsers(dest="command")
     
-    batch_parser = subparsers.add_parser("generate-batch", help="Generate a batch of unique humans")
+    batch_parser = subparsers.add_parser("generate-batch", help="Generate a batch of haunted sprites")
     batch_parser.add_argument("--count", type=int, required=True, help="Number of characters to generate")
     batch_parser.add_argument("--size", type=int, default=32, help="Square canvas size (e.g. 32, 64, 128)")
+    batch_parser.add_argument("--palette", type=str, default="rotting", 
+                             choices=["rotting", "bloodstained", "spore_infested", "bone_dry", "bruised"],
+                             help="Trauma palette (default: rotting)")
     batch_parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
     batch_parser.add_argument("--no-metadata", action="store_true", help="Disable metadata output")
     batch_parser.set_defaults(func=run_generate_batch)
