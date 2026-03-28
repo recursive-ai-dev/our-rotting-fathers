@@ -1,0 +1,123 @@
+{
+  "generation_complete": true,
+  "total_characters_generated": 50,
+  "canvas_size": [
+    32,
+    32
+  ],
+  "total_unique_combinations": 50,
+  "duplicates_avoided": 0,
+  "generation_stats": {
+    "total_generated": 50,
+    "unique_count": 50,
+    "duplicates_avoided": 0,
+    "by_skin_tone": {},
+    "by_hair_style": {
+      "basic_short": 7,
+      "slicked_back": 2,
+      "ponytail": 3,
+      "side_part": 3,
+      "designer_cut": 2,
+      "simple_long": 3,
+      "styled_back": 2,
+      "professional_long": 1,
+      "expensive_cut": 3,
+      "designer_short": 5,
+      "long_messy": 1,
+      "professional": 4,
+      "short_rough": 1,
+      "short_messy": 3,
+      "long": 1,
+      "unkempt_long": 2,
+      "bald": 1,
+      "neat_short": 1,
+      "expensive_style": 1,
+      "short": 1,
+      "unkempt": 1,
+      "crew_cut": 1,
+      "styled_waves": 1
+    },
+    "by_face_style": {
+      "basic": 13,
+      "detailed": 25,
+      "minimal": 12
+    },
+    "by_social_class": {
+      "working": 15,
+      "upper": 8,
+      "poor": 10,
+      "middle": 4,
+      "rich": 13
+    },
+    "by_gender": {
+      "female": 21,
+      "male": 29
+    }
+  },
+  "diversity_final": {
+    "skin_tones_used": [
+      "(130, 126, 119)",
+      "(106, 104, 101)",
+      "(168, 162, 150)",
+      "(142, 137, 128)",
+      "(155, 149, 138)",
+      "(95, 94, 93)",
+      "(118, 115, 110)"
+    ],
+    "hair_colors_used": [
+      "(62, 58, 52)",
+      "(95, 91, 82)",
+      "(45, 42, 38)",
+      "(112, 108, 97)",
+      "(35, 33, 30)",
+      "(78, 74, 67)"
+    ],
+    "clothing_combos_used": [
+      "basic_shirt_khakis",
+      "sweater_vest_slacks",
+      "tank_top_worn_jeans",
+      "sweater_jeans",
+      "dress_shirt_dress_pants",
+      "sweater_work_pants",
+      "sweater_vest_chinos",
+      "designer_sweater_suit_pants",
+      "basic_shirt_work_pants",
+      "polo_dress_pants",
+      "polo_jeans",
+      "basic_shirt_skirt",
+      "expensive_jacket_expensive_skirt",
+      "blouse_work_pants",
+      "designer_sweater_designer_jeans",
+      "designer_sweater_expensive_pants",
+      "blouse_skirt",
+      "luxury_top_expensive_skirt",
+      "expensive_shirt_suit_pants",
+      "sweater_skirt",
+      "cardigan_dress",
+      "blazer_chinos",
+      "suit_jacket_suit_pants",
+      "loose_shirt_shorts",
+      "suit_jacket_expensive_pants",
+      "hoodie_worn_jeans",
+      "worn_tshirt_worn_jeans",
+      "worn_tshirt_skirt",
+      "polo_khakis",
+      "expensive_jacket_designer_pants",
+      "sweater_dress_pants"
+    ],
+    "face_variations_used": [
+      "minimal_False_True",
+      "detailed_True_False",
+      "detailed_True_True",
+      "basic_False_True",
+      "basic_True_False",
+      "minimal_False_False",
+      "detailed_False_True",
+      "basic_False_False",
+      "detailed_False_False",
+      "minimal_True_False"
+    ]
+  },
+  "estimated_max_combinations": 60480000,
+  "uniqueness_ratio": 1.0
+}

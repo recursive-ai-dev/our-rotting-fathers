@@ -60,15 +60,19 @@ poetry.lock
 .env.local
 .env.*.local
 
+# Node.js
+node_modules/
+package-lock.json
+npm-debug.log
+
 # Generated content (images, sprites, exports)
-*.png
-*.jpg
-*.jpeg
-*.gif
-*.bmp
-*.webp
-export/
-quick_test/
+# Note: Godot project assets are tracked, only ignore tool exports
+tools/rotborn-recursion/export/
+tools/rotborn-recursion/quick_test/
+tools/rotborn-recursion/*.png
+tools/rotborn-recursion/*.jpg
+tools/rotborn-recursion/*.jpeg
+tools/rotborn-recursion/*.gif
 
 # Logs
 *.log
