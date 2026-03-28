@@ -1,8 +1,0 @@
-*.jpg
-*.png
-*.jpeg
-node_modules/*
-venv/*
-.venv/*
-dist
-
