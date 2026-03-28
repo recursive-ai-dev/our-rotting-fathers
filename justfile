@@ -13,7 +13,7 @@ default:
 # Install all dependencies (Python + npm)
 setup:
   echo "🔧 Setting up project dependencies..."
-  cd tools/rotborn-recursion && python -m venv venv && source venv/bin/activate && pip install -r requirements.txt
+  cd tools/rotborn-recursion && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt && pip install pytest black flake8
   npm install
   echo "✅ Setup complete!"
 
@@ -78,19 +78,19 @@ build-all: build-web build-linux build-windows build-macos
 # Generate character sprites for game
 generate-sprites:
   echo "🎨 Generating character sprites..."
-  cd tools/rotborn-recursion && python ai_human_generator.py generate-batch 100 --output ../../game/godot/assets/sprites/characters/
+  cd tools/rotborn-recursion && . venv/bin/activate && python3 ai_human_generator.py generate-batch --count 100 --output-dir ../../game/godot/assets/sprites/characters/
   echo "✅ Sprites generated!"
 
 # Generate sprites with specific trauma palette
 generate-sprites-palette PALETTE="rotting":
   echo "🎨 Generating sprites with {{PALETTE}} palette..."
-  cd tools/rotborn-recursion && python ai_human_generator.py generate-batch 50 --palette {{PALETTE}} --output ../../game/godot/assets/sprites/characters/{{PALETTE}}/
+  cd tools/rotborn-recursion && . venv/bin/activate && python3 ai_human_generator.py generate-batch --count 50 --palette {{PALETTE}} --output-dir ../../game/godot/assets/sprites/characters/{{PALETTE}}/
   echo "✅ Sprites generated!"
 
 # Generate animation sprite sheets
 generate-animations:
   echo "🎬 Generating animation sprite sheets..."
-  cd tools/rotborn-recursion && python ai_human_generator.py generate-animation --output ../../game/godot/assets/animations/
+  cd tools/rotborn-recursion && . venv/bin/activate && python3 ai_human_generator.py generate-animation --output ../../game/godot/assets/animations/
   echo "✅ Animations generated!"
 
 # Generate all content (sprites + animations)
@@ -104,7 +104,7 @@ generate-all: generate-sprites generate-animations
 # Run Python tests (Rotborn tools)
 test-python:
   echo "🧪 Running Python tests..."
-  cd tools/rotborn-recursion && source venv/bin/activate && pytest tests/ -v
+  cd tools/rotborn-recursion && . venv/bin/activate && pytest tests/ -v
 
 # Run Godot tests (requires GUT)
 test-godot:
@@ -122,12 +122,12 @@ test: test-python test-godot
 # Format Python code
 format-python:
   echo "📝 Formatting Python code..."
-  cd tools/rotborn-recursion && source venv/bin/activate && black generator/ app/ tests/ && isort generator/ app/ tests/
+  cd tools/rotborn-recursion && . venv/bin/activate && black generator/ app/ tests/ && isort generator/ app/ tests/
 
 # Lint Python code
 lint-python:
   echo "🔍 Linting Python code..."
-  cd tools/rotborn-recursion && source venv/bin/activate && flake8 generator/ app/ tests/ && mypy generator/ app/
+  cd tools/rotborn-recursion && . venv/bin/activate && flake8 generator/ app/ tests/ && mypy generator/ app/
 
 # Format and lint all
 lint: lint-python
