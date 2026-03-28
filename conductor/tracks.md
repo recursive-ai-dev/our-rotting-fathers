@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Lore & World-Building Foundation - Factions, Acts Structure, and Narrative Design**
+- [~] **Track: Lore & World-Building Foundation - Factions, Acts Structure, and Narrative Design**
   *Link: [./tracks/lore_foundation_20260327/](./tracks/lore_foundation_20260327/)*
