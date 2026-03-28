@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource type="Control" path_local_to_scene="." version="4.2">
+  <property name="name">GameUI</property>
+  
+  <!-- Main game HUD - diegetic organic style -->
+  <node name="HUD" type="Control">
+    <property name="mouse_filter">2</property>
+    
+    <!-- Top bar: sanity and faction -->
+    <node name="TopBar" type="HBoxContainer">
+      <property name="anchors_preset">10</property>
+      <property name="offset_bottom">60.0</property>
+      
+      <node name="SanityMeter" type="TextureProgressBar">
+        <!-- Cracks appear as sanity decreases -->
+      </node>
+      
+      <node name="FactionIndicator" type="TextureRect">
+        <!-- Current faction alignment icon -->
+      </node>
+    </node>
+    
+    <!-- Bottom bar: health and quick items -->
+    <node name="BottomBar" type="HBoxContainer">
+      <property name="anchors_preset">12</property>
+      <property name="anchor_top">1.0</property>
+      <property name="offset_top">-80.0</property>
+      
+      <node name="HealthBar" type="TextureProgressBar">
+        <!-- Styled as blood vessel -->
+      </node>
+      
+      <node name="QuickItems" type="HBoxContainer">
+        <!-- 4 quick-use item slots -->
+      </node>
+    </node>
+    
+    <!-- Minimap: hand-drawn parchment style -->
+    <node name="Minimap" type="SubViewportContainer">
+      <property name="anchors_preset">1</property>
+      <property name="anchor_right">1.0</property>
+      <property name="offset_right">200.0</property>
+      <property name="offset_bottom">200.0</property>
+    </node>
+    
+    <!-- Interaction prompt -->
+    <node name="InteractionPrompt" type="Label">
+      <property name="visible">false</property>
+      <property name="text">[E] Interact</property>
+    </node>
+  </node>
+</resource>

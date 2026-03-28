@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource type="Node2D" path_local_to_scene="." version="4.2">
+  <property name="name">CombatScene</property>
+  
+  <!-- Turn-based combat arena -->
+  <node name="CombatArena" type="Node2D">
+    <node name="Background" type="Sprite2D">
+      <!-- Combat background art -->
+    </node>
+    
+    <node name="PlayerParty" type="Node2D">
+      <!-- Player party positions -->
+    </node>
+    
+    <node name="EnemyParty" type="Node2D">
+      <!-- Enemy positions -->
+    </node>
+    
+    <node name="Effects" type="Node2D">
+      <!-- Combat VFX, animations -->
+    </node>
+  </node>
+  
+  <node name="CombatUI" type="CanvasLayer">
+    <node name="ActionMenu" type="Control">
+      <!-- Fight, Magic, Item, Flee options -->
+    </node>
+    
+    <node name="StatusPanel" type="Control">
+      <!-- HP, sanity, buffs display -->
+    </node>
+    
+    <node name="DialogueBox" type="Control">
+      <!-- Combat narration, ability descriptions -->
+    </node>
+  </node>
+</resource>

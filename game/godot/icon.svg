@@ -1,0 +1,33 @@
+<svg height="128" width="128" xmlns="http://www.w3.org/2000/svg">
+  <!-- Our Rotting Father RPG - Icon -->
+  <!-- A haunting symbol: spore cloud over decay -->
+  <defs>
+    <radialGradient id="spore-gradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#4a7c4e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a2f1d;stop-opacity:1" />
+    </radialGradient>
+    <linearGradient id="decay-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d2f2f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1a1515;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background: decay colors -->
+  <rect x="2" y="2" width="124" height="124" rx="16" fill="url(#decay-gradient)" stroke="#5c4a4a" stroke-width="3"/>
+  
+  <!-- Spore cloud circles -->
+  <circle cx="64" cy="50" r="28" fill="url(#spore-gradient)" opacity="0.9"/>
+  <circle cx="50" cy="58" r="18" fill="#5c8f63" opacity="0.7"/>
+  <circle cx="78" cy="58" r="15" fill="#6ba875" opacity="0.6"/>
+  <circle cx="64" cy="68" r="20" fill="#4a7c4e" opacity="0.8"/>
+  
+  <!-- Small spores scattered -->
+  <circle cx="40" cy="45" r="4" fill="#7fc98f" opacity="0.5"/>
+  <circle cx="88" cy="45" r="3" fill="#7fc98f" opacity="0.5"/>
+  <circle cx="35" cy="70" r="3" fill="#6ba875" opacity="0.4"/>
+  <circle cx="93" cy="70" r="4" fill="#6ba875" opacity="0.4"/>
+  <circle cx="64" cy="35" r="3" fill="#8fdba0" opacity="0.6"/>
+  
+  <!-- Subtle glow effect -->
+  <circle cx="64" cy="50" r="35" fill="none" stroke="#4a7c4e" stroke-width="1" opacity="0.3"/>
+</svg>

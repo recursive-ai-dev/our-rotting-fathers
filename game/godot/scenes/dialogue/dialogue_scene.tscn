@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource type="Control" path_local_to_scene="." version="4.2">
+  <property name="name">DialogueScene</property>
+  
+  <!-- Dialogue system with branching choices -->
+  <node name="DialogueContainer" type="MarginContainer">
+    <property name="anchors_preset">3</property>
+    <property name="anchor_bottom">1.0</property>
+    <property name="grow_horizontal">2</property>
+    
+    <node name="VBox" type="VBoxContainer">
+      <node name="SpeakerPanel" type="Panel">
+        <node name="SpeakerName" type="Label">
+          <property name="text">Speaker</property>
+        </node>
+        <node name="SpeakerPortrait" type="TextureRect">
+          <!-- Faction-coded portrait -->
+        </node>
+      </node>
+      
+      <node name="DialogueText" type="RichTextLabel">
+        <property name="bbcode_enabled">true</property>
+        <property name="text">[i]Dialogue text appears here...[/i]</property>
+      </node>
+      
+      <node name="ChoicesContainer" type="VBoxContainer">
+        <!-- Dynamic choice buttons -->
+      </node>
+    </node>
+  </node>
+  
+  <node name="PsychosisOverlay" type="ColorRect">
+    <!-- Sanity-based visual distortion -->
+  </node>
+</resource>

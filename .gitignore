@@ -25,9 +25,7 @@ MANIFEST
 venv/
 .venv/
 env/
-.venv/
 ENV/
-env/
 .conda/
 
 # IDE
@@ -101,3 +99,12 @@ temp/
 *.tmp
 *.bak
 *.swp
+
+# Godot Engine
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+*.pid
+*.lock
+# Keep project.godot tracked, exclude editor cache

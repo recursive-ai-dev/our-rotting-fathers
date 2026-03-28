@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource type="Node2D" path_local_to_scene="." version="4.2">
+  <property name="name">MainGame</property>
+  
+  <!-- Main game scene - parent for all gameplay -->
+  <node name="World" type="Node2D">
+    <node name="Environment" type="Node2D">
+      <!-- Background, lighting, atmosphere -->
+    </node>
+    
+    <node name="Player" type="CharacterBody2D">
+      <!-- Player character node -->
+    </node>
+    
+    <node name="Enemies" type="Node2D">
+      <!-- Enemy spawn container -->
+    </node>
+    
+    <node name="Interactables" type="Node2D">
+      <!-- NPCs, items, triggers -->
+    </node>
+    
+    <node name="Collision" type="TileMap">
+      <!-- World collision tiles -->
+    </node>
+  </node>
+  
+  <node name="UI" type="CanvasLayer">
+    <node name="HUD" type="Node2D">
+      <!-- Health, sanity, faction indicators -->
+    </node>
+  </node>
+  
+  <node name="Managers" type="Node">
+    <!-- Runtime managers for game systems -->
+  </node>
+</resource>
