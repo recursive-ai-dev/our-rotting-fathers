@@ -12,7 +12,10 @@ import json
 import time
 from PIL import Image, ImageDraw
 from typing import Dict, List, Tuple, Optional, Set
-from .pure_generator import PureCharacterGenerator
+try:
+    from .pure_generator import PureCharacterGenerator
+except ImportError:
+    from pure_generator import PureCharacterGenerator
 from collections import defaultdict, Counter
 
 def safe_print(text):

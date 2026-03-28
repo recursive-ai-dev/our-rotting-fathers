@@ -9,9 +9,14 @@ import random
 import math
 from PIL import Image, ImageDraw, ImageChops
 from typing import Dict, List, Tuple, Optional
-from .pure_generator import PureCharacterGenerator
-from .direction_renderer import Direction, DirectionRenderer
-from .animation_types import ANIMATION_DEFS, get_animation_def
+try:
+    from .pure_generator import PureCharacterGenerator
+    from .direction_renderer import Direction, DirectionRenderer
+    from .animation_types import ANIMATION_DEFS, get_animation_def
+except ImportError:
+    from pure_generator import PureCharacterGenerator
+    from direction_renderer import Direction, DirectionRenderer
+    from animation_types import ANIMATION_DEFS, get_animation_def
 
 class AnimationGenerator:
     """Generate animation frames for characters"""

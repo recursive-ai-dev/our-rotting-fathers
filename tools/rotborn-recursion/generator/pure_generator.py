@@ -13,8 +13,12 @@ from PIL import Image, ImageDraw
 from typing import Dict, List, Tuple, Optional
 from dataclasses import dataclass
 from enum import Enum
-from .direction_renderer import Direction, DirectionRenderer
-from .rotborn_palettes import TraumaPalette, get_palette, get_palette_names
+try:
+    from .direction_renderer import Direction, DirectionRenderer
+    from .rotborn_palettes import TraumaPalette, get_palette, get_palette_names
+except ImportError:
+    from direction_renderer import Direction, DirectionRenderer
+    from rotborn_palettes import TraumaPalette, get_palette, get_palette_names
 
 @dataclass
 class ColorPalette:

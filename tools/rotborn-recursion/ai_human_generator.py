@@ -562,7 +562,7 @@ def show_about():
     print()
     safe_print("🔬 MATHEMATICAL RIGOR:")
     print("   • Every character gets unique parameter hash")
-    print("   • Sprite pixel hash prevents visual duplicates") 
+    print("   • Sprite pixel hash prevents visual duplicates")
     print("   • Real demographic distributions (US Census data)")
     print("   • Medical BMI formulas: weight = (BMI × height²) ÷ 703")
     print()
@@ -574,4 +574,5 @@ def show_about():
     main()
 
 if __name__ == "__main__":
-    main()
+    import sys
+    sys.exit(run_cli())
