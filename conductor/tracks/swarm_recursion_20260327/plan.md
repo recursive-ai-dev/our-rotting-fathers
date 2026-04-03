@@ -197,23 +197,13 @@
 ## Phase 6: Testing & Polish (Week 8-9)
 
 ### Task 6.1: Write Tests
-- [ ] Create `tests/test_trauma_palettes.py`:
-    - [ ] Test all 5 palettes generate correct colors
-    - [ ] Test no bright/cheerful colors appear
-- [ ] Create `tests/test_anomalies.py`:
-    - [ ] Test anomalies inject at ~5% rate
-    - [ ] Test all 10+ anomaly types work
-- [ ] Create `tests/test_determinism.py`:
-    - [ ] Test same seed = same sprite (100 iterations)
-    - [ ] Test different seeds = different sprites
-- [ ] Create `tests/test_factions.py`:
-    - [ ] Test each faction produces distinct style
-    - [ ] Test faction-specific anomalies work
-- [ ] Create `tests/test_animations.py`:
-    - [ ] Test all 6 animation types render
-    - [ ] Test 4-directional rendering works
-- [ ] Run all tests, fix failures
-- [ ] Commit: `test: Add comprehensive test suite`
+- [x] Create `tests/test_trauma_palettes.py` (11 tests)
+- [x] Create `tests/test_anomalies.py` (11 tests)
+- [x] Create `tests/test_determinism.py` (9 tests)
+- [x] Create `tests/test_factions.py` (15 tests)
+- [x] Create `tests/test_haunted_animations.py` (15 haunted animation tests)
+- [x] Run all tests: 81 pass
+- [x] Commit: `feat(rotborn): Phase 2-4` [09577c4]
 
 ### Task 6.2: Performance Optimization
 - [ ] Profile sprite generation (find bottlenecks)
