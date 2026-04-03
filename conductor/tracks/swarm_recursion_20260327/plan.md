@@ -240,7 +240,7 @@
 
 ---
 
-## Phase 8: Showcase & Release (Week 10-11)
+## Phase 8: Showcase & Release (Week 10-11) [checkpoint: cd24330]
 
 ### Task 8.1: Development Blog
 - [~] Write blog post: "Building a Haunted Sprite Generator"
