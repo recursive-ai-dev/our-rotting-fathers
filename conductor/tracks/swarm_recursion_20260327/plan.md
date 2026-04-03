@@ -1,7 +1,7 @@
 # Track Implementation Plan: Rotborn Recursion Engine
 
 **Track ID:** swarm_recursion_20260327  
-**Status:** New  
+**Status:** In Progress  
 **Created:** 2026-03-27
 
 ---
@@ -9,49 +9,49 @@
 ## Phase 1: Fork & Audit (Week 1)
 
 ### Task 1.1: Clone Swarm-Art
-- [ ] Copy swarm-art codebase to `tools/rotborn-recursion/`
-- [ ] Verify all files are present (README, app/, tests/, templates/)
-- [ ] Run existing tests to confirm baseline functionality
-- [ ] Document what works vs. what's broken
+- [x] Copy swarm-art codebase to `tools/rotborn-recursion/`
+- [x] Verify all files are present (README, app/, tests/, templates/)
+- [x] Run existing tests to confirm baseline functionality
+- [x] Document what works vs. what's broken
 
 ### Task 1.2: Audit Existing Code
-- [ ] Read all main Python files:
-    - [ ] `ai_human_generator.py`
-    - [ ] `app/main.py`
-    - [ ] `app/main_window.py`
-    - [ ] `swarm_generator.py` (if exists)
-- [ ] Identify what to keep (deterministic generation, CLI, GUI)
-- [ ] Identify what to strip (GeneSwarm AI learning)
-- [ ] Identify what to modify (palettes, proportions, animations)
-- [ ] Create audit document: `docs/swarm-audit.md`
+- [x] Read all main Python files:
+    - [x] `ai_human_generator.py`
+    - [x] `app/main.py`
+    - [x] `app/main_window.py`
+    - [x] `swarm_generator.py` (if exists)
+- [x] Identify what to keep (deterministic generation, CLI, GUI)
+- [x] Identify what to strip (GeneSwarm AI learning)
+- [x] Identify what to modify (palettes, proportions, animations)
+- [x] Create audit document: `ROTBORN_AUDIT.md`
 
 ### Task 1.3: Strip GeneSwarm
-- [ ] Remove AI learning components (nano-tensor agents)
-- [ ] Keep deterministic generation (seed-based)
-- [ ] Simplify swarm-coordinator → memory-coordinator
-- [ ] Test that generation still works after stripping
-- [ ] Commit: `chore: Strip GeneSwarm AI, keep deterministic core`
+- [x] Remove AI learning components (nano-tensor agents)
+- [x] Keep deterministic generation (seed-based)
+- [x] Simplify swarm-coordinator → memory-coordinator
+- [x] Test that generation still works after stripping
+- [x] Commit: `rotborn(phase1): Strip GeneSwarm AI, keep deterministic core`
 
-**Phase Completion Verification:** [ ] Swarm-art forked, audited, GeneSwarm stripped
+**Phase Completion Verification:** [x] Swarm-art forked, audited, GeneSwarm stripped
 
 ---
 
 ## Phase 2: Replace Visual Systems (Week 1-3)
 
 ### Task 2.1: Create Trauma-Palettes
-- [ ] Create `core/trauma_palettes.py`
-- [ ] Define 5 core palettes:
-    - [ ] `rotting` - Sickly greens, corpse-grays, decay-browns
-    - [ ] `bloodstained` - Dried blood, fresh blood, rust
-    - [ ] `spore_infested` - Glowing greens, fungal yellows
-    - [ ] `bone_dry` - Bone-whites, ash-grays, desaturated
-    - [ ] `bruised` - Purples, blues, dark reds
-- [ ] Test palette application on sprites
-- [ ] Ensure no bright/cheerful colors remain
-- [ ] Commit: `feat: Add trauma-palettes for dark fantasy`
+- [x] Create `core/trauma_palettes.py` (implemented as `generator/rotborn_palettes.py`)
+- [x] Define 5 core palettes:
+    - [x] `rotting` - Sickly greens, corpse-grays, decay-browns
+    - [x] `bloodstained` - Dried blood, fresh blood, rust
+    - [x] `spore_infested` - Glowing greens, fungal yellows
+    - [x] `bone_dry` - Bone-whites, ash-grays, desaturated
+    - [x] `bruised` - Purples, blues, dark reds
+- [x] Test palette application on sprites
+- [x] Ensure no bright/cheerful colors remain
+- [x] Commit: `rotborn(phase2): Add trauma palettes - the god's last memories`
 
 ### Task 2.2: Create Broken-Proportions
-- [ ] Create `core/broken_proportions.py`
+- [~] Create `core/broken_proportions.py`
 - [ ] Define 5 body types:
     - [ ] `emaciated` - Too thin, visible ribs, sunken features
     - [ ] `bloated` - Distended, fluid-filled, gas-swollen
@@ -63,7 +63,7 @@
 - [ ] Commit: `feat: Add broken-proportions for wrong anatomy`
 
 ### Task 2.3: Create Anomaly-Injector
-- [ ] Create `core/anomaly_injector.py`
+- [~] Create `core/anomaly_injector.py`
 - [ ] Define 10+ anomaly types:
     - [ ] `too_many_eyes` - 3+ eyes, randomly positioned
     - [ ] `wrong_mouth` - Vertical, on forehead, or absent

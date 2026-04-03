@@ -22,6 +22,7 @@ AudioManager="*res://scripts/autoload/audio_manager.gd"
 SaveSystem="*res://scripts/autoload/save_system.gd"
 FactionManager="*res://scripts/autoload/faction_manager.gd"
 SanityManager="*res://scripts/autoload/sanity_manager.gd"
+VoiceGenerator="*res://scripts/autoload/voice_generator.gd"
 
 [display]
 

@@ -100,6 +100,24 @@ class AnimationGenerator:
         elif anim_type == 'pickup':
             self._apply_pickup_offsets(offsets, progress)
 
+        elif anim_type == 'twitch':
+            self._apply_twitch_offsets(offsets, frame_idx)
+
+        elif anim_type == 'shamble':
+            self._apply_shamble_offsets(offsets, progress)
+
+        elif anim_type == 'convulse':
+            self._apply_convulse_offsets(offsets, frame_idx)
+
+        elif anim_type == 'stumble':
+            self._apply_stumble_offsets(offsets, progress)
+
+        elif anim_type == 'worship':
+            self._apply_worship_offsets(offsets, progress)
+
+        elif anim_type == 'transform':
+            self._apply_transform_offsets(offsets, progress)
+
         return offsets
 
     def _apply_run_offsets(self, offsets: Dict, progress: float, phase: float, amp: float, lean: float):
@@ -222,6 +240,160 @@ class AnimationGenerator:
             offsets['head_y'] = int(0.02 * (1 - t) * self.height)
             offsets['arm_left_y'] = int(0.02 * (1 - t) * self.height)
             offsets['arm_right_y'] = int(0.02 * (1 - t) * self.height)
+
+    # ==================== HAUNTED ANIMATIONS ====================
+
+    def _apply_twitch_offsets(self, offsets: Dict, frame_idx: int):
+        """Twitch: involuntary muscle spasms. 3 frames.
+        Frame 0: neutral. Frame 1: sharp jerk. Frame 2: recoil."""
+        if frame_idx == 0:
+            pass  # Neutral — the body pretends to be still
+        elif frame_idx == 1:
+            # Sharp involuntary jerk
+            offsets['body_x'] = int(self.width * 0.06)
+            offsets['head_y'] = int(-self.height * 0.04)
+            offsets['arm_right_y'] = int(-self.height * 0.06)
+            offsets['arm_left_y'] = int(self.height * 0.03)
+        elif frame_idx == 2:
+            # Recoil — overcorrects
+            offsets['body_x'] = int(-self.width * 0.03)
+            offsets['head_y'] = int(self.height * 0.02)
+            offsets['arm_right_y'] = int(self.height * 0.03)
+
+    def _apply_shamble_offsets(self, offsets: Dict, progress: float):
+        """Shamble: dragging movement, one leg slower. 4 frames."""
+        # Asymmetric walk — left leg drags
+        cycle = math.sin(progress * 2 * math.pi)
+        offsets['body_y'] = int(abs(cycle) * self.height * 0.04)
+        offsets['body_x'] = int(cycle * self.width * 0.02)
+        # Right arm swings normally
+        offsets['arm_right_y'] = int(cycle * self.height * 0.04)
+        # Left arm barely moves (dragging)
+        offsets['arm_left_y'] = int(cycle * self.height * 0.01)
+        # Right leg normal, left leg lags behind
+        offsets['leg_right_y'] = int(math.cos(progress * 2 * math.pi) * self.height * 0.03)
+        offsets['leg_left_y'] = int(math.cos((progress - 0.3) * 2 * math.pi) * self.height * 0.01)
+
+    def _apply_convulse_offsets(self, offsets: Dict, frame_idx: int):
+        """Convulse: violent full-body spasms. 3 frames."""
+        if frame_idx == 0:
+            # Violent forward lurch
+            offsets['body_y'] = int(self.height * 0.08)
+            offsets['head_y'] = int(self.height * 0.06)
+            offsets['arm_left_y'] = int(-self.height * 0.08)
+            offsets['arm_right_y'] = int(self.height * 0.06)
+            offsets['body_x'] = int(self.width * 0.04)
+        elif frame_idx == 1:
+            # Violent backward snap
+            offsets['body_y'] = int(-self.height * 0.06)
+            offsets['head_y'] = int(-self.height * 0.08)
+            offsets['arm_left_y'] = int(self.height * 0.06)
+            offsets['arm_right_y'] = int(-self.height * 0.08)
+            offsets['body_x'] = int(-self.width * 0.05)
+        elif frame_idx == 2:
+            # Partial recovery — still shaking
+            offsets['body_y'] = int(self.height * 0.03)
+            offsets['head_y'] = int(self.height * 0.02)
+            offsets['arm_left_y'] = int(-self.height * 0.02)
+            offsets['arm_right_y'] = int(self.height * 0.02)
+            offsets['body_x'] = int(self.width * 0.01)
+
+    def _apply_stumble_offsets(self, offsets: Dict, progress: float):
+        """Stumble: almost falling, catching itself. 4 frames."""
+        if progress < 0.25:
+            # Lean forward — losing balance
+            t = progress / 0.25
+            offsets['body_y'] = int(t * self.height * 0.06)
+            offsets['body_x'] = int(t * self.width * 0.05)
+            offsets['head_y'] = int(t * self.height * 0.04)
+            offsets['arm_left_y'] = int(-t * self.height * 0.06)
+        elif progress < 0.5:
+            # Desperate catch — arm shoots out
+            t = (progress - 0.25) / 0.25
+            offsets['body_y'] = int((0.06 + t * 0.04) * self.height)
+            offsets['body_x'] = int((0.05 + t * 0.03) * self.width)
+            offsets['arm_right_y'] = int(-t * self.height * 0.08)
+            offsets['arm_left_y'] = int(-self.height * 0.06)
+        elif progress < 0.75:
+            # Catching — body stabilizing
+            t = (progress - 0.5) / 0.25
+            offsets['body_y'] = int((0.10 - t * 0.07) * self.height)
+            offsets['body_x'] = int((0.08 - t * 0.06) * self.width)
+            offsets['arm_right_y'] = int((-0.08 + t * 0.06) * self.height)
+        else:
+            # Recovered — but not quite right
+            t = (progress - 0.75) / 0.25
+            offsets['body_y'] = int((0.03 - t * 0.03) * self.height)
+            offsets['body_x'] = int((0.02 - t * 0.02) * self.width)
+
+    def _apply_worship_offsets(self, offsets: Dict, progress: float):
+        """Worship: ritual bowing, prostration. 6 frames."""
+        if progress < 1/6:
+            # Stand — preparing
+            pass
+        elif progress < 2/6:
+            # Begin bow
+            t = (progress - 1/6) / (1/6)
+            offsets['body_y'] = int(t * self.height * 0.06)
+            offsets['head_y'] = int(t * self.height * 0.08)
+            offsets['arm_left_y'] = int(t * self.height * 0.04)
+            offsets['arm_right_y'] = int(t * self.height * 0.04)
+        elif progress < 3/6:
+            # Deep bow
+            t = (progress - 2/6) / (1/6)
+            offsets['body_y'] = int((0.06 + t * 0.06) * self.height)
+            offsets['head_y'] = int((0.08 + t * 0.08) * self.height)
+            offsets['arm_left_y'] = int((0.04 + t * 0.04) * self.height)
+            offsets['arm_right_y'] = int((0.04 + t * 0.04) * self.height)
+        elif progress < 4/6:
+            # Prostration — lowest point
+            offsets['body_y'] = int(0.12 * self.height)
+            offsets['head_y'] = int(0.16 * self.height)
+            offsets['arm_left_y'] = int(0.08 * self.height)
+            offsets['arm_right_y'] = int(0.08 * self.height)
+        elif progress < 5/6:
+            # Rising
+            t = (progress - 4/6) / (1/6)
+            offsets['body_y'] = int((0.12 - t * 0.10) * self.height)
+            offsets['head_y'] = int((0.16 - t * 0.14) * self.height)
+            offsets['arm_left_y'] = int((0.08 - t * 0.07) * self.height)
+            offsets['arm_right_y'] = int((0.08 - t * 0.07) * self.height)
+        else:
+            # Return to stand — but slightly changed
+            t = (progress - 5/6) / (1/6)
+            offsets['body_y'] = int((0.02 - t * 0.02) * self.height)
+            offsets['head_y'] = int((0.02 - t * 0.02) * self.height)
+
+    def _apply_transform_offsets(self, offsets: Dict, progress: float):
+        """Transform: body changing mid-animation. 5 frames."""
+        if progress < 0.2:
+            # Stillness before the change
+            pass
+        elif progress < 0.4:
+            # First tremor
+            t = (progress - 0.2) / 0.2
+            offsets['body_x'] = int(math.sin(t * math.pi * 4) * self.width * 0.03)
+            offsets['arm_left_y'] = int(-t * self.height * 0.04)
+        elif progress < 0.6:
+            # The change begins — body distorts
+            t = (progress - 0.4) / 0.2
+            offsets['body_y'] = int(math.sin(t * math.pi) * self.height * 0.06)
+            offsets['body_x'] = int(math.cos(t * math.pi * 3) * self.width * 0.04)
+            offsets['arm_left_y'] = int(-self.height * 0.06)
+            offsets['arm_right_y'] = int(self.height * 0.04)
+            offsets['head_y'] = int(-t * self.height * 0.04)
+        elif progress < 0.8:
+            # Peak distortion
+            t = (progress - 0.6) / 0.2
+            offsets['body_y'] = int((0.06 - t * 0.04) * self.height)
+            offsets['body_x'] = int(math.sin(t * math.pi * 2) * self.width * 0.03)
+            offsets['arm_left_y'] = int((-0.06 + t * 0.04) * self.height)
+            offsets['head_y'] = int((-0.04 + t * 0.02) * self.height)
+        else:
+            # Settling — but not back to normal
+            t = (progress - 0.8) / 0.2
+            offsets['body_y'] = int((0.02 - t * 0.01) * self.height)
+            offsets['body_x'] = int(self.width * 0.01 * (1 - t))
 
     def _generate_frame_with_pose(self, params: Dict, offsets: Dict,
                                   direction: Direction = Direction.DOWN) -> Image.Image:
