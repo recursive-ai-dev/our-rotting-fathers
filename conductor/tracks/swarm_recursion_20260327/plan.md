@@ -187,7 +187,7 @@
 
 ---
 
-## Phase 6: Testing & Polish (Week 8-9)
+## Phase 6: Testing & Polish (Week 8-9) [checkpoint: 8725bf6]
 
 ### Task 6.1: Write Tests
 - [x] Create `tests/test_trauma_palettes.py` (11 tests)
