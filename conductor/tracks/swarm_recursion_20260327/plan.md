@@ -124,7 +124,7 @@
 
 ---
 
-## Phase 4: Haunted Animations (Week 5-7)
+## Phase 4: Haunted Animations (Week 5-7) [checkpoint: f67a5b5]
 
 ### Task 4.1: Create Haunted Animation System
 - [x] Create haunted animations in `generator/animation_types.py` and `generator/animation_generator.py`
