@@ -157,7 +157,7 @@
 ## Phase 5: GUI Redesign (Week 7-8)
 
 ### Task 5.1: Dark Theme
-- [ ] Modify `app/main_window.py` for dark theme
+- [~] Modify `app/main_window.py` for dark theme
 - [ ] Replace bright colors with blacks, grays, blood reds
 - [ ] Update all UI elements (buttons, labels, panels)
 - [ ] Test readability (text must still be legible)
