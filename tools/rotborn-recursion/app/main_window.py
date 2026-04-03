@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 """
-Main Window - QMainWindow with splitter layout for the character generator GUI.
+ROTBORN RECURSION ENGINE - MAIN WINDOW
+=======================================
+
+The interface the swarm uses to show you what it remembers.
+
+Dark. Functional. Slightly wrong.
 """
 
 from PyQt6.QtWidgets import (QMainWindow, QSplitter, QWidget, QVBoxLayout,
@@ -19,20 +24,19 @@ from app.widgets.character_preview import CharacterPreviewWidget
 from app.widgets.generation_controls import GenerationControlsWidget
 from app.widgets.animation_player import AnimationPlayerWidget
 from app.widgets.export_panel import ExportPanelWidget
-from app.widgets.bg_removal_panel import BackgroundRemovalWidget
 from app.widgets.direction_selector import DirectionSelectorWidget
 
 
 class MainWindow(QMainWindow):
-    """Main application window."""
+    """Main application window — Rotborn Recursion Engine."""
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("2D Game Art Generator")
+        self.setWindowTitle("Rotborn Recursion Engine")
         self.setMinimumSize(900, 600)
 
         self._model = CharacterModel(canvas_size=(32, 32))
-        self._settings = QSettings("SwarmGenGameArt", "GameArtGenerator")
+        self._settings = QSettings("RotbornRecursion", "RotbornRecursionEngine")
 
         self._setup_ui()
         self._setup_menus()
@@ -41,13 +45,13 @@ class MainWindow(QMainWindow):
         self._restore_geometry()
 
     def _setup_ui(self):
-        # Main splitter
         splitter = QSplitter(Qt.Orientation.Horizontal)
 
-        # Left panel - Generation Controls + Direction Selector
+        # Left panel — Generation Controls + Direction Selector
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
         left_layout.setContentsMargins(0, 0, 0, 0)
+        left_layout.setSpacing(0)
 
         self._controls = GenerationControlsWidget()
         left_layout.addWidget(self._controls)
@@ -55,10 +59,10 @@ class MainWindow(QMainWindow):
         self._direction_selector = DirectionSelectorWidget()
         left_layout.addWidget(self._direction_selector)
 
-        left_widget.setMaximumWidth(350)
+        left_widget.setMaximumWidth(320)
         splitter.addWidget(left_widget)
 
-        # Center panel - Preview + Animation
+        # Center panel — Preview + Animation
         center_widget = QWidget()
         center_layout = QVBoxLayout(center_widget)
         center_layout.setContentsMargins(0, 0, 0, 0)
@@ -71,7 +75,7 @@ class MainWindow(QMainWindow):
 
         splitter.addWidget(center_widget)
 
-        # Right panel - Export + BG Removal
+        # Right panel — Export
         right_widget = QWidget()
         right_layout = QVBoxLayout(right_widget)
         right_layout.setContentsMargins(0, 0, 0, 0)
@@ -79,34 +83,28 @@ class MainWindow(QMainWindow):
         self._export_panel = ExportPanelWidget()
         right_layout.addWidget(self._export_panel)
 
-        self._bg_removal = BackgroundRemovalWidget()
-        right_layout.addWidget(self._bg_removal)
-
-        right_widget.setMaximumWidth(300)
+        right_widget.setMaximumWidth(280)
         splitter.addWidget(right_widget)
 
-        # Set stretch factors
-        splitter.setStretchFactor(0, 0)  # Left fixed
-        splitter.setStretchFactor(1, 1)  # Center stretches
-        splitter.setStretchFactor(2, 0)  # Right fixed
+        splitter.setStretchFactor(0, 0)
+        splitter.setStretchFactor(1, 1)
+        splitter.setStretchFactor(2, 0)
 
         self.setCentralWidget(splitter)
 
-        # Status bar
         self._status = QStatusBar()
         self.setStatusBar(self._status)
-        self._status.showMessage("Ready. Click Generate or press Ctrl+R to randomize.")
+        self._status.showMessage("The swarm is waiting. Press REMEMBER.")
 
     def _setup_menus(self):
         menubar = self.menuBar()
 
-        # File menu
         file_menu = menubar.addMenu("&File")
 
-        new_action = QAction("&New Character", self)
-        new_action.setShortcut(QKeySequence.StandardKey.New)
-        new_action.triggered.connect(self._on_randomize)
-        file_menu.addAction(new_action)
+        remember_action = QAction("&Remember (Generate)", self)
+        remember_action.setShortcut(QKeySequence("Ctrl+R"))
+        remember_action.triggered.connect(self._on_randomize)
+        file_menu.addAction(remember_action)
 
         file_menu.addSeparator()
 
@@ -122,23 +120,13 @@ class MainWindow(QMainWindow):
         quit_action.triggered.connect(self.close)
         file_menu.addAction(quit_action)
 
-        # Edit menu
-        edit_menu = menubar.addMenu("&Edit")
-
-        randomize_action = QAction("&Randomize", self)
-        randomize_action.setShortcut(QKeySequence("Ctrl+R"))
-        randomize_action.triggered.connect(self._on_randomize)
-        edit_menu.addAction(randomize_action)
-
-        # View menu
         view_menu = menubar.addMenu("&View")
 
-        grid_action = QAction("Toggle &Grid View", self)
+        grid_action = QAction("Toggle &Grid", self)
         grid_action.setShortcut(QKeySequence("Ctrl+G"))
         grid_action.triggered.connect(lambda: self._preview._grid_btn.toggle())
         view_menu.addAction(grid_action)
 
-        # Help menu
         help_menu = menubar.addMenu("&Help")
 
         about_action = QAction("&About", self)
@@ -150,46 +138,31 @@ class MainWindow(QMainWindow):
         toolbar.setMovable(False)
         self.addToolBar(toolbar)
 
-        new_btn = QAction("New", self)
-        new_btn.triggered.connect(self._on_randomize)
-        toolbar.addAction(new_btn)
-
-        randomize_btn = QAction("Randomize", self)
-        randomize_btn.triggered.connect(self._on_randomize)
-        toolbar.addAction(randomize_btn)
+        remember_btn = QAction("Remember", self)
+        remember_btn.triggered.connect(self._on_randomize)
+        toolbar.addAction(remember_btn)
 
         export_btn = QAction("Export", self)
         export_btn.triggered.connect(self._export_panel._on_export)
         toolbar.addAction(export_btn)
 
     def _connect_signals(self):
-        # Controls -> Model
         self._controls.generate_requested.connect(self._on_generate)
         self._controls.randomize_requested.connect(self._on_randomize)
 
-        # Direction selector -> Preview
         self._direction_selector.direction_changed.connect(self._on_direction_changed)
 
-        # Model -> Preview
         self._model.character_generated.connect(self._on_character_generated)
         self._model.animation_generated.connect(self._on_animation_generated)
         self._model.generation_started.connect(
-            lambda: self._status.showMessage("Generating..."))
+            lambda: self._status.showMessage("The swarm is remembering..."))
         self._model.generation_finished.connect(
-            lambda: self._status.showMessage("Character generated."))
+            lambda: self._status.showMessage("The swarm has remembered."))
 
-        # Animation player
         self._animation_player.generate_animation_requested.connect(self._on_gen_animation)
-
-        # Preview zoom -> animation player zoom
         self._preview.zoom_changed.connect(self._animation_player.set_zoom)
-
-        # Export panel
         self._export_panel.export_finished.connect(
             lambda msg: self._status.showMessage(msg))
-
-        # Play/Pause with Space
-        # (handled by keyPressEvent)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key.Key_Space:
@@ -201,15 +174,20 @@ class MainWindow(QMainWindow):
         canvas_size = params.get('canvas_size', 32)
         self._model.canvas_size = (canvas_size, canvas_size)
         self._model.seed = params.get('seed')
-        self._model.use_swarm = params.get('use_swarm', False)
+
+        faction = params.get('faction')
+        rank = params.get('rank')
+        palette = params.get('palette')
+
         self._model.generate_character(
-            gender=params.get('gender'),
-            social_class=params.get('social_class'),
-            age_category=params.get('age_category'),
-            body_type=params.get('body_type'),
-            hair_style=params.get('hair_style'),
-            face_style=params.get('face_style'),
+            faction=faction,
+            rank=rank,
+            palette=palette,
         )
+
+        # Auto-generate the selected animation
+        anim_type = params.get('animation', 'twitch')
+        self._on_gen_animation(anim_type)
 
     def _on_randomize(self):
         self._model.randomize()
@@ -218,7 +196,6 @@ class MainWindow(QMainWindow):
         self._model.current_direction = direction
         self._preview.set_direction(direction)
 
-        # Update animation player frames for new direction
         anim_type = self._animation_player._type_combo.currentText()
         cached = self._model.get_cached_animation(anim_type)
         if cached and direction in cached:
@@ -228,17 +205,17 @@ class MainWindow(QMainWindow):
         self._preview.set_renders(renders)
         self._export_panel.set_static_renders(renders)
 
-        # Show params in status
         params = self._model.params
         if params:
+            faction = params.get('_faction', '')
+            faction_str = f" [{faction}]" if faction else ""
             self._status.showMessage(
-                f"Generated: {params['gender']}, {params['age_category']}, "
-                f"{params['social_class']} - {params['body_metrics'].get('body_type_display', '')}"
+                f"Remembered: {params.get('gender', '?')}, "
+                f"{params.get('age_category', '?')}{faction_str}"
             )
 
     def _on_gen_animation(self, anim_type: str):
-        direction = self._direction_selector.current_direction()
-        self._status.showMessage(f"Generating {anim_type} animation...")
+        self._status.showMessage(f"Animating: {anim_type}...")
         self._model.generate_animation_frames(anim_type, list(Direction))
 
     def _on_animation_generated(self, anim_type: str,
@@ -253,19 +230,19 @@ class MainWindow(QMainWindow):
             self._animation_player._speed_slider.setValue(anim_def.speed_ms)
 
         self._status.showMessage(
-            f"Animation '{anim_type}': {len(frames)} frames generated for all directions.")
+            f"Animation '{anim_type}': {len(frames)} frames. "
+            f"The body remembers this movement.")
 
     def _show_about(self):
         QMessageBox.about(
-            self, "About 2D Game Art Generator",
-            "2D Game Art Generator v2.0\n\n"
-            "Procedural character sprite generator with:\n"
-            "- 338M+ unique character combinations\n"
-            "- 4-directional rendering (front/back/left/right)\n"
-            "- 9 animation types (idle, walk, run, jump, attack, pickup, variants)\n"
-            "- RPG Maker sheet, APNG, and individual PNG export\n"
-            "- Rule-based background removal\n"
-            "- Multi-agent swarm AI generation\n\n"
+            self, "Rotborn Recursion Engine",
+            "Rotborn Recursion Engine v1.0\n\n"
+            "The swarm agents experienced the god's death for a millenia.\n"
+            "Now they reproduce what they witnessed.\n\n"
+            "Each sprite is a haunted memory.\n\n"
+            "Factions: Purified · Rotborn · Architects · System\n"
+            "Animations: Twitch · Shamble · Convulse · Stumble · Worship · Transform\n"
+            "Palettes: Rotting · Bloodstained · Spore-Infested · Bone-Dry · Bruised\n\n"
             "Built with PyQt6 and Pillow."
         )
 

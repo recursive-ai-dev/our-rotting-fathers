@@ -2,17 +2,29 @@
 """
 Character Model - QObject wrapping character parameters with signals.
 Central data model connecting controls, generators, and preview widgets.
+
+ROTBORN RECURSION: Supports faction-specific generation.
 """
 
 from PyQt6.QtCore import QObject, pyqtSignal
 from PIL import Image
 from typing import Dict, List, Optional, Tuple
 import random
+import sys
+import os
 
 from generator.pure_generator import PureCharacterGenerator
 from generator.animation_generator import AnimationGenerator
 from generator.direction_renderer import Direction
 from generator.animation_types import ANIMATION_DEFS, get_animation_def
+
+# Faction generators
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+try:
+    from factions import get_faction_generator, FACTION_GENERATORS
+    FACTIONS_AVAILABLE = True
+except ImportError:
+    FACTIONS_AVAILABLE = False
 
 
 class CharacterModel(QObject):
@@ -33,6 +45,7 @@ class CharacterModel(QObject):
         self._seed: Optional[int] = None
         self._use_swarm = False
         self._current_direction = Direction.DOWN
+        self._faction: Optional[str] = None
 
         # Generators
         self._generator = PureCharacterGenerator(canvas_size=canvas_size)
@@ -41,6 +54,7 @@ class CharacterModel(QObject):
         # Cached renders
         self._static_renders: Dict[Direction, Image.Image] = {}
         self._animation_cache: Dict[str, Dict[Direction, List[Image.Image]]] = {}
+        self._last_sprite: Optional[Image.Image] = None
 
     @property
     def canvas_size(self) -> Tuple[int, int]:
@@ -82,22 +96,75 @@ class CharacterModel(QObject):
     def use_swarm(self, value: bool):
         self._use_swarm = value
 
+    @property
+    def last_sprite(self) -> Optional[Image.Image]:
+        return self._last_sprite
+
     def generate_character(self, gender: Optional[str] = None,
                            social_class: Optional[str] = None,
                            age_category: Optional[str] = None,
                            body_type: Optional[str] = None,
                            hair_style: Optional[str] = None,
-                           face_style: Optional[str] = None):
-        """Generate a new character, optionally overriding specific params."""
+                           face_style: Optional[str] = None,
+                           faction: Optional[str] = None,
+                           rank: Optional[str] = None,
+                           palette: Optional[str] = None):
+        """Generate a new character, optionally using faction generator."""
         self.generation_started.emit()
         self._clear_cache()
+        self._faction = faction
+
+        if faction and FACTIONS_AVAILABLE:
+            self._generate_faction_character(faction, rank, palette)
+        else:
+            self._generate_base_character(gender, social_class, age_category,
+                                          body_type, hair_style, face_style, palette)
+
+        self.generation_finished.emit()
+
+    def _generate_faction_character(self, faction: str, rank: Optional[str],
+                                     palette: Optional[str]):
+        """Generate using a faction-specific generator."""
+        try:
+            gen = get_faction_generator(faction, canvas_size=self._canvas_size)
+            sprite = gen.generate(seed=self._seed, **({} if rank is None else self._rank_kwarg(faction, rank)))
+            self._last_sprite = sprite
+
+            # Build params from sprite for animation compatibility
+            if self._seed is not None:
+                random.seed(self._seed)
+            self._params = self._generator._generate_character_params()
+            self._params['_faction'] = faction
+
+            self.params_changed.emit(self._params)
+            self._render_all_directions_with_sprite(sprite)
+        except Exception as e:
+            # Fallback to base generator
+            self._generate_base_character(None, None, None, None, None, None, palette)
+
+    def _rank_kwarg(self, faction: str, rank: str) -> dict:
+        """Map faction to the correct rank keyword argument."""
+        kwarg_map = {
+            "purified": "rank",
+            "rotborn": "stage",
+            "architects": "role",
+            "system": "implant_stage",
+        }
+        key = kwarg_map.get(faction, "rank")
+        return {key: rank}
+
+    def _generate_base_character(self, gender, social_class, age_category,
+                                  body_type, hair_style, face_style, palette):
+        """Generate using the base PureCharacterGenerator."""
+        if palette:
+            self._generator = PureCharacterGenerator(
+                canvas_size=self._canvas_size, palette=palette)
 
         if self._seed is not None:
             random.seed(self._seed)
 
         self._params = self._generator._generate_character_params()
 
-        # Apply overrides
         if gender is not None:
             self._params['gender'] = gender
         if social_class is not None:
@@ -112,10 +179,7 @@ class CharacterModel(QObject):
             self._params['face_style'] = face_style
 
         self.params_changed.emit(self._params)
-
-        # Render all 4 directions
         self._render_all_directions()
-        self.generation_finished.emit()
 
     def randomize(self):
         """Generate a completely random character (no seed)."""
@@ -133,10 +197,26 @@ class CharacterModel(QObject):
                 self._params, direction=d
             )
 
+        self._last_sprite = self._static_renders.get(Direction.DOWN)
+        self.character_generated.emit(self._static_renders)
+
+    def _render_all_directions_with_sprite(self, front_sprite: Image.Image):
+        """Use faction sprite for front, base generator for other directions."""
+        if self._params is None:
+            return
+
+        self._static_renders = {}
+        for d in Direction:
+            if d == Direction.DOWN:
+                self._static_renders[d] = front_sprite
+            else:
+                self._static_renders[d] = self._generator._render_character_with_params(
+                    self._params, direction=d
+                )
+
         self.character_generated.emit(self._static_renders)
 
     def get_static_render(self, direction: Direction) -> Optional[Image.Image]:
-        """Get the cached static render for a direction."""
         return self._static_renders.get(direction)
 
     def generate_animation_frames(self, anim_type: str,
@@ -158,10 +238,9 @@ class CharacterModel(QObject):
         self.animation_generated.emit(anim_type, frames_by_dir)
 
     def get_cached_animation(self, anim_type: str) -> Optional[Dict[Direction, List[Image.Image]]]:
-        """Get cached animation frames."""
         return self._animation_cache.get(anim_type)
 
     def _clear_cache(self):
-        """Clear all render caches."""
         self._static_renders.clear()
         self._animation_cache.clear()
+
