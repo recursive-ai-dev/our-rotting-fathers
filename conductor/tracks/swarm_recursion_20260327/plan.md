@@ -214,7 +214,7 @@
 
 ---
 
-## Phase 7: Documentation & Packaging (Week 9-10)
+## Phase 7: Documentation & Packaging (Week 9-10) [checkpoint: e4a4bba]
 
 ### Task 7.1: Write Documentation
 - [x] Write `README.md` (lore-infused tone, faction table, CLI examples, API)
