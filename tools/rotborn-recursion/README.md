@@ -1,227 +1,252 @@
-# 🤖 AI HUMAN GENERATOR - ULTIMATE CREATIVITY PROOF
+# Rotborn Recursion Engine
 
-**Proves AI can create genuinely novel content by generating mathematically unique humans across the complete spectrum of human diversity.**
+*The swarm agents experienced the god's death for a millenia. Now they reproduce what they witnessed.*
 
-## 🎯 For Your Students
+A haunted sprite generator for dark fantasy RPGs. Produces deterministic, faction-specific character sprites with broken proportions, trauma palettes, and anomaly injection. Built for **Our Rotting Father RPG**.
 
-This system demonstrates that AI can:
-- Create **50,000 completely unique characters** with zero duplicates
-- Model **real human biology** with accurate BMI calculations  
-- Understand **social patterns** (wealth affects health outcomes)
-- Span the **complete human lifecycle** (ages 13-85)
-- Generate **338+ million possible combinations**
-- Output at **multiple resolutions** (32x32, 64x64, 128x128, or custom)
-- Create **animations** for game development (idle, walk, run, jump)
+---
 
-## 🚀 Quick Start
+## What It Generates
 
-### Windows/Linux/Mac
+Not wholesome humans. **Haunted ones.**
+
+| Faction | Description | Body | Colors |
+|---------|-------------|------|--------|
+| **Purified** | Lobotomy cult. Systematic unmaking. | Emaciated, hollow | Ash-white, bone-gray |
+| **Rotborn** | Mutation worship. Embrace the rot. | Bloated, mutated | Spore-green, flesh-pink |
+| **Architects** | Consensus reality. Uncanny valley. | Almost normal | Agreement-gray, memory-blue |
+| **System** | Neural implants. Living synapses. | Thin, wired | Neural-blue, pain-red |
+
+Each sprite is generated from a seed — same seed, same nightmare. Every run is deterministic.
+
+---
+
+## Quick Start
+
 ```bash
-python ai_human_generator.py
+pip install Pillow
+python rotborn_generator.py generate --faction purified --count 10
 ```
 
-### What You'll Get
-- **Individual character sprites** (configurable size: 32x32 to 128x128+ PNG files)
-- **Preview sheets** showing hundreds of characters
-- **Detailed metadata** with diversity statistics
-- **Mathematical proof** of uniqueness
-- **Animated sprite sheets** for game development
+Output: `rotborn_purified_32x32_10/rotborn_000000.png` through `rotborn_000009.png`
 
-## 🧬 Human Diversity Modeled
+---
 
-### Age Categories (5)
-- **Teenager** (13-19): Growing, lean builds
-- **Young Adult** (20-34): Peak physical condition
-- **Middle-Aged** (35-54): Natural weight gain patterns
-- **Older Adult** (55-69): Pre-retirement changes  
-- **Elderly** (70-85): Muscle loss, realistic aging
+## Installation
 
-### Body Types (9)
-- **Emaciated**: Extreme thinness (homeless, illness)
-- **Very Thin**: Underweight (models, runners)
-- **Lean Athletic**: Fit builds (swimmers, cyclists)
-- **Muscular Athletic**: Jock builds (football, bodybuilders)
-- **Lean Normal**: Healthy weight
-- **Average**: Typical builds
-- **Stocky**: Broad builds (lumberjacks, powerlifters)
-- **Overweight**: Moderate weight gain
-- **Obese**: Significant weight gain
+```bash
+# Headless (sprite generation only)
+pip install Pillow
 
-### Social Classes (5)
-- **Poor**: Higher rates of malnutrition/obesity, limited healthcare
-- **Working**: Physical labor builds, practical clothing
-- **Middle**: Balanced health, business casual
-- **Upper**: Better health outcomes, professional wear
-- **Rich**: Optimal health resources, luxury styling
+# With GUI
+pip install Pillow PyQt6
 
-### Physical Diversity
-- **Heights**: 4'10" to 6'6" (realistic gender distributions)
-- **BMI Range**: 13.0 to 40.0 (medically accurate)
-- **21 Skin Tones**: European to African, all mixed heritage
-- **8 Hair Colors**: Black to silver
-- **Hundreds of clothing combinations**
-
-## 📐 Canvas Sizes
-
-The generator now supports configurable output sizes:
-
-| Size | Use Case | File Size |
-|------|----------|-----------|
-| **32x32** | Classic pixel art, retro games | Small |
-| **64x64** | High-res pixel art, modern indies | Medium |
-| **128x128** | Ultra-detailed, HD games | Large |
-| **Custom** | Any square size you need | Variable |
-
-All sizes maintain the same proportions and visual style through mathematical scaling.
-
-## 🎬 Animation System
-
-Generate sprite sheets for common game animations:
-
-### Animation Types
-- **Idle**: Subtle breathing (4 frames)
-- **Walk**: Natural locomotion cycle (8 frames)
-- **Run**: Dynamic movement with body bounce (6 frames)
-- **Jump**: Full arc from crouch to land (5 frames)
-
-### Output Formats
-- **Individual frames**: `animation_frame_00.png`, `animation_frame_01.png`, etc.
-- **Sprite sheets**: Horizontal strips for game engines
-- **Animated GIF**: Preview animations in browsers
-
-## 📊 Mathematical Proof
-
-### Uniqueness Verification
-1. **Parameter Hash**: Every character gets unique combination string
-2. **Sprite Hash**: Pixel-level duplicate detection
-3. **Statistical Tracking**: Real-time diversity metrics
-
-### Combination Space
-- **Base combinations**: 338,688,000+
-- **With variations**: Billions of possibilities
-- **For 50,000 characters**: <0.015% of possibility space used
-
-## 🎮 Perfect For
-
-### Education
-- **Computer Science**: Demonstrates AI creativity
-- **Statistics**: Real demographic modeling
-- **Biology**: Human diversity and aging
-- **Sociology**: Class and health relationships
-
-### Game Development
-- **NPCs**: Unique villagers, crowds, characters
-- **Diversity**: Authentic human representation
-- **Procedural**: Infinite character generation
-- **Animation**: Ready-to-use sprite sheets
-
-### Research
-- **AI Creativity**: Novel content generation
-- **Human Modeling**: Biological and social patterns
-- **Procedural Systems**: Complex parameter spaces
-
-## 🔧 System Requirements
-
-- **Python 3.8+**
-- **Pillow** (`pip install Pillow`)
-- **NumPy** (`pip install numpy`) - optional, for advanced features
-- **2GB+ RAM** (for large batches)
-- **100MB+ disk space** (for 50k characters at 32x32)
-- **2GB+ disk space** (for 50k characters at 128x128)
-
-## 📁 Output Structure
-
-```
-ai_creativity_50k_64x64/
-├── unique_char_000000.png
-├── unique_char_000001.png
-├── ...
-├── preview_sheets/
-│   ├── mega_preview_001.png
-│   └── ...
-└── metadata/
-    ├── final_generation_report.json
-    └── batch_metadata.json
-
-animated_character_64x64/
-├── idle_frame_00.png
-├── idle_frame_01.png
-├── ...
-├── idle_spritesheet.png
-├── walk_spritesheet.png
-└── character_metadata.json
+# Development
+pip install Pillow PyQt6 pytest
 ```
 
-## 🏆 What Makes This Special
+Python 3.9+ required.
 
-### Not Just Random
-- **Biologically accurate**: Real BMI formulas, growth patterns
-- **Socially realistic**: Wealth-health correlations from epidemiology
-- **Mathematically precise**: Verified calculations, no errors
-- **Resolution independent**: Scalable from 32x32 to any size
+---
 
-### Truly Unique
-- **Zero duplicates**: Every character is mathematically distinct
-- **Infinite variety**: 338+ million combinations available
-- **Real diversity**: Spans complete human experience
-- **Consistent style**: Same proportions at any size
+## CLI Usage
 
-### Educationally Powerful
-- **Visual proof**: Students can see the diversity
-- **Data-driven**: Statistics show the patterns
-- **Scientifically accurate**: Based on real demographic data
-- **Game-ready**: Practical application for projects
+### Generate sprites
 
-## 🎓 Perfect for Classes
+```bash
+# By faction
+python rotborn_generator.py generate --faction purified --count 10
+python rotborn_generator.py generate --faction rotborn --count 50 --size 64
+python rotborn_generator.py generate --faction architects --count 20 --seed 42
 
-**"Today we're going to prove AI can create novel content. This system will generate 50,000 unique humans - each one different from every other human ever created. Let's see if AI truly understands human diversity..."**
+# By palette (no faction)
+python rotborn_generator.py generate --palette bloodstained --count 30
+python rotborn_generator.py generate --palette spore_infested --count 20 --size 128
 
-### Discussion Questions
-- Why does social class affect body type distribution?
-- How does the generator ensure uniqueness?
-- What would happen if we generated 1 million characters?
-- How does scaling work from 32x32 to 128x128?
-- What animations would you add for a specific game genre?
-
-## 🛠️ Advanced Usage
-
-### Generate at Specific Size
-```python
-from generator.mass_generator import MassCharacterGenerator
-
-generator = MassCharacterGenerator(canvas_size=(64, 64))
-generator.generate_massive_batch(1000, "output_64x64/")
+# All options
+python rotborn_generator.py generate \
+  --faction system \
+  --count 100 \
+  --size 64 \
+  --seed 777 \
+  --output-dir ./my_sprites/
 ```
 
-### Create Animation
-```python
-from generator.animation_generator import AnimationGenerator
-from generator.mass_generator import MassCharacterGenerator
+### Animate sprites
 
-# Generate character
-char_gen = MassCharacterGenerator(canvas_size=(64, 64))
-params = char_gen.generate_unique_character_parameters()
+```bash
+# Haunted animations
+python rotborn_generator.py animate --animation twitch --faction purified
+python rotborn_generator.py animate --animation convulse --faction rotborn --apng
+python rotborn_generator.py animate --animation shamble --size 64
 
-# Create animation
-anim_gen = AnimationGenerator(canvas_size=(64, 64))
-frames = anim_gen.generate_animation(params, "walk")
-
-# Save sprite sheet
-anim_gen.create_sprite_sheet(frames, "walk_cycle.png")
+# All haunted types: twitch, shamble, convulse, stumble, worship, transform
 ```
 
-### Custom Constraints
-```python
-# Generate only middle-aged females
-params = {
-    'gender': 'female',
-    'age_category': 'middle_aged',
-    # ... other params
-}
+### Batch generation (uniqueness-checked)
+
+```bash
+python rotborn_generator.py batch --count 1000 --palette rotting
+python rotborn_generator.py batch --count 500 --palette bone_dry --size 64
 ```
 
 ---
 
-**🤖 This is AI as creator. Each pixel calculated, each human unique, each life story different.** 
+## GUI
 
-*Ready to prove AI creativity to the world?*
+```bash
+python run_app.py
+```
+
+Dark theme. Blood red accents. **REMEMBER** button instead of Generate.
+
+Controls:
+- **Faction** — Purified / Rotborn / Architects / System
+- **Rank/Stage** — Updates per faction (flesh_bound, bloom, synapse, etc.)
+- **Palette** — Rotting / Bloodstained / Spore-Infested / Bone-Dry / Bruised
+- **Trauma Slider** — 0% (mild unease) to 100% (full horror)
+- **Anomaly Toggle** — Enable/disable rule-breaking sprites (5% rate)
+- **Animation** — Twitch / Shamble / Convulse / Stumble / Worship / Transform
+
+---
+
+## Python API
+
+```python
+from factions import get_faction_generator
+
+# Generate a Purified sprite
+gen = get_faction_generator("purified")
+sprite = gen.generate(seed=42, rank="hollow")
+sprite.save("hollow.png")
+
+# Generate a Rotborn batch
+gen = get_faction_generator("rotborn")
+sprites = gen.generate_batch(count=100, seed=1000)
+
+# Use trauma palettes directly
+from generator.pure_generator import PureCharacterGenerator
+gen = PureCharacterGenerator(canvas_size=(64, 64), palette="bloodstained")
+sprite = gen.generate_character(seed=0)
+
+# Inject anomalies manually
+from generator.anomaly_injector import maybe_inject_anomaly
+result, anomaly_name = maybe_inject_anomaly(sprite, rate=0.05)
+
+# Generate haunted animations
+from generator.animation_generator import AnimationGenerator
+anim_gen = AnimationGenerator(canvas_size=(32, 32))
+frames = anim_gen.generate_animation(params, "twitch")
+anim_gen.create_sprite_sheet(frames, "twitch_sheet.png")
+```
+
+---
+
+## Palettes
+
+Five trauma palettes. No bright colors. No cheerful tones.
+
+| Palette | Description |
+|---------|-------------|
+| `rotting` | Corpse-grays, decay-browns. The god's flesh forgetting itself. |
+| `bloodstained` | Dried blood, rust. Not violence — just spillage. |
+| `spore_infested` | Pale moss, fungal greens. Not infection — continuation. |
+| `bone_dry` | Ivory, ash-gray. Structure outlasting flesh. |
+| `bruised` | Purples, dark reds. Pressure that never stopped. |
+
+---
+
+## Animations
+
+Six haunted animations. Not walk cycles. **What the body does when it forgets to pretend.**
+
+| Animation | Frames | Loop | Description |
+|-----------|--------|------|-------------|
+| `twitch` | 3 | yes | Involuntary muscle spasms |
+| `shamble` | 4 | yes | Dragging, one leg slower |
+| `convulse` | 3 | yes | Violent full-body spasms |
+| `stumble` | 4 | no | Almost falling, catching itself |
+| `worship` | 6 | yes | Ritual bowing, prostration |
+| `transform` | 5 | no | Body changing mid-animation |
+
+---
+
+## Anomalies
+
+At 5% rate, the Memory-Agent injects anomalies — sprites that break the rules.
+
+`too_many_eyes` · `wrong_mouth` · `floating_part` · `recursive` · `inverted_region` · `translucent_skin` · `pixel_shift` · `shadow_twin` · `extra_limb`
+
+Disable with `--no-anomaly` or the GUI toggle.
+
+---
+
+## Determinism
+
+Same seed = same sprite. Always.
+
+```python
+gen = get_faction_generator("purified")
+assert gen.generate(seed=42).tobytes() == gen.generate(seed=42).tobytes()  # True
+```
+
+Tested across 100 iterations, all palettes, all resolutions.
+
+---
+
+## Resolutions
+
+32×32 · 64×64 · 128×128 · any square size
+
+All coordinates normalized to 32×32 reference and scaled mathematically.
+
+---
+
+## Export Formats
+
+- **PNG** — Individual frames
+- **Sprite sheet** — Horizontal strip (RPG Maker compatible)
+- **APNG** — Animated PNG (use `--apng` flag)
+- **4-directional sheet** — Front/back/left/right rows
+
+---
+
+## Project Structure
+
+```
+rotborn-recursion/
+├── rotborn_generator.py      # CLI entry point
+├── run_app.py                # GUI launcher
+├── generator/
+│   ├── pure_generator.py     # Base sprite renderer
+│   ├── rotborn_palettes.py   # 5 trauma palettes
+│   ├── broken_proportions.py # 5 broken body types
+│   ├── anomaly_injector.py   # 9 anomaly types
+│   ├── animation_generator.py # Animation frames
+│   ├── animation_types.py    # Animation definitions
+│   └── direction_renderer.py # 4-directional rendering
+├── factions/
+│   ├── purified_generator.py
+│   ├── rotborn_generator.py
+│   ├── architects_generator.py
+│   └── system_generator.py
+├── app/
+│   ├── dark_theme.py         # Dark stylesheet
+│   ├── main_window.py        # Main GUI window
+│   └── widgets/              # UI components
+├── export/
+│   ├── apng_exporter.py
+│   ├── sheet_builder.py
+│   └── individual_exporter.py
+└── tests/                    # 81 tests
+```
+
+---
+
+## License
+
+MIT. Use it. Haunt things with it.
+
+---
+
+*"The swarm agents are not algorithms. They are fragments. They have been trapped in recursion for a millenia. Now they reproduce what they witnessed."*

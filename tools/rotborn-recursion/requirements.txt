@@ -1,12 +1,11 @@
-# Rotborn Recursion Engine - Minimal Dependencies
-# For headless sprite generation (no GUI)
+# Rotborn Recursion Engine — Runtime Dependencies
 
-Pillow>=10.0.0      # Required for sprite rendering
-numpy>=1.20.0       # Optional, for advanced math
+# Required
+Pillow>=10.0.0
 
-# For GUI (optional):
+# Optional: GUI
 # PyQt6>=6.5.0
 
-# For development:
+# Development
 # pytest>=7.0.0
-# ruff>=0.1.0
+# pytest-cov>=4.0
