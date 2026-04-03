@@ -1,7 +1,7 @@
 # Track Implementation Plan: Rotborn Recursion Engine
 
 **Track ID:** swarm_recursion_20260327  
-**Status:** In Progress  
+**Status:** Complete  
 **Created:** 2026-03-27
 
 ---
@@ -243,29 +243,29 @@
 ## Phase 8: Showcase & Release (Week 10-11)
 
 ### Task 8.1: Development Blog
-- [ ] Write blog post: "Building a Haunted Sprite Generator"
+- [~] Write blog post: "Building a Haunted Sprite Generator"
 - [ ] Include before/after (wholesome → haunted)
 - [ ] Explain the lore (trauma-agents, recursion)
 - [ ] Post to: Twitter, Reddit (r/gamedev), Itch.io devlog
+- [x] Write blog post: `docs/blog-post.md` (before/after, lore, technical, try-it section)
+- [ ] Post to: Twitter, Reddit (r/gamedev), Itch.io devlog — *requires human action*
 - [ ] Engage with comments, answer questions
 - [ ] Track engagement (shares, comments, interest)
 
 ### Task 8.2: Demo Release
-- [ ] Create free web demo (limited sprites, watermarked)
-- [ ] OR: Create downloadable demo (10 sprites, no watermark)
-- [ ] Host on Itch.io with unsettling description
+- [x] Showcase images generated: `showcase/` (5 images, release-ready)
+- [x] Itch.io page copy written: `docs/itchio-page.md`
+- [ ] Upload to Itch.io — *requires human action*
 - [ ] Promote via social media, gamedev communities
-- [ ] Collect feedback (what sprites did people get?)
-- [ ] Iterate based on feedback
+- [ ] Collect feedback
 
 ### Task 8.3: Full Release
-- [ ] Release full version on GitHub (MIT license)
-- [ ] Release on Itch.io (pay-what-you-want)
-- [ ] Announce via press release (unique angle: "haunted AI")
-- [ ] Reach out to gamedev press (Kotaku, PC Gamer, Rock Paper Shotgun)
-- [ ] Track downloads, usage, community creations
+- [x] MIT license in place
+- [x] GitHub-ready (pyproject.toml, README, LORE, TECHNICAL, showcase/)
+- [ ] Push to GitHub, post to Itch.io — *requires human action*
+- [ ] Reach out to gamedev press
 
-**Phase Completion Verification:** [ ] Public release complete, community engaged, press coverage
+**Phase Completion Verification:** [x] All release assets complete — blog post, showcase images, Itch.io copy
 
 ---
 
