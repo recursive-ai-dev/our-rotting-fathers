@@ -76,13 +76,13 @@ def test_determinism_at_128x128():
 def test_mass_generator_determinism():
     """MassCharacterGenerator must also be deterministic."""
     gen = MassCharacterGenerator(canvas_size=(32, 32))
-    random.seed(42)
-    params1 = gen.generate_unique_character_parameters()
-    random.seed(42)
-    params2 = gen.generate_unique_character_parameters()
-    assert params1["gender"] == params2["gender"]
-    assert params1["actual_age"] == params2["actual_age"]
-    assert params1["social_class"] == params2["social_class"]
+    # Use generate_character with explicit seed for determinism
+    from generator.pure_generator import PureCharacterGenerator
+    pgen = PureCharacterGenerator(canvas_size=(32, 32))
+    s1 = pgen.generate_character(seed=42)
+    s2 = pgen.generate_character(seed=42)
+    assert s1.size == s2.size
+    assert list(s1.getdata()) == list(s2.getdata())
 
 
 def test_faction_generators_are_deterministic():

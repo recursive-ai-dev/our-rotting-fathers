@@ -60,7 +60,11 @@ def test_get_all_animation_types():
     assert 'attack' in types
     assert 'pickup' in types
     assert 'run_alt1' in types
-    assert len(types) == 9
+    # Haunted animations also registered
+    assert 'twitch' in types
+    assert 'shamble' in types
+    assert 'convulse' in types
+    assert len(types) == 15
 
 
 def test_attack_animation_frames():
