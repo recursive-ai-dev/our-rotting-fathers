@@ -18,6 +18,7 @@ import os
 import argparse
 import json
 import random
+import re
 from typing import Optional, List
 
 # Ensure generator modules are importable
@@ -31,12 +32,31 @@ from generator.animation_types import get_haunted_animation_types, get_all_anima
 from factions import get_faction_generator, FACTION_GENERATORS
 
 
+# Pre-compiled once at import time; avoids per-call `import re` in the
+# UnicodeEncodeError fallback path of safe_print().
+_NON_ASCII_RE = re.compile(r'[^\x00-\x7F]+')
+
+
+def _positive_int(value: str) -> int:
+    """argparse type validator: accepts only strictly positive integers."""
+    try:
+        ivalue = int(value)
+    except (TypeError, ValueError):
+        raise argparse.ArgumentTypeError(
+            "expected a positive integer, got %r" % (value,)
+        )
+    if ivalue < 1:
+        raise argparse.ArgumentTypeError(
+            "expected a positive integer (>= 1), got %d" % ivalue
+        )
+    return ivalue
+
+
 def safe_print(text: str):
     try:
         print(text)
     except UnicodeEncodeError:
-        import re
-        print(re.sub(r'[^\x00-\x7F]+', '?', text))
+        print(_NON_ASCII_RE.sub('?', text))
 
 
 def cmd_generate(args: argparse.Namespace) -> int:
@@ -54,6 +74,8 @@ def cmd_generate(args: argparse.Namespace) -> int:
 
     generated = 0
     base_seed = args.seed if args.seed is not None else random.randint(0, 2**31)
+    # Hoist loop-invariant progress step computation out of the hot loop.
+    progress_step = max(1, args.count // 10)
 
     for i in range(args.count):
         seed = base_seed + i
@@ -71,7 +93,7 @@ def cmd_generate(args: argparse.Namespace) -> int:
         sprite.save(filepath, "PNG")
         generated += 1
 
-        if generated % max(1, args.count // 10) == 0 or generated == args.count:
+        if generated % progress_step == 0 or generated == args.count:
             safe_print(f"  [{generated}/{args.count}] {filename}")
 
     safe_print(f"\nGenerated {generated} sprites in {output_dir}")
@@ -92,18 +114,14 @@ def cmd_animate(args: argparse.Namespace) -> int:
     safe_print(f"  Size: {args.size}x{args.size}")
     safe_print(f"  Output: {output_dir}")
 
-    # Generate base character params
-    if args.faction:
-        gen = get_faction_generator(args.faction, canvas_size=canvas_size)
-        sprite = gen.generate(seed=seed)
-        base_gen = PureCharacterGenerator(canvas_size=canvas_size)
-        random.seed(seed)
-        params = base_gen._generate_character_params()
-    else:
-        base_gen = PureCharacterGenerator(canvas_size=canvas_size)
-        params = base_gen.generate_character(seed=seed)
-        random.seed(seed)
-        params = base_gen._generate_character_params()
+    # Generate base character params.
+    # The prior implementation called gen.generate()/generate_character() and
+    # then discarded the rendered sprite, re-seeded RNG, and re-derived params.
+    # Since _generate_character_params() is the only output we consume, we seed
+    # once and call it directly -- eliminating a full wasted sprite render.
+    base_gen = PureCharacterGenerator(canvas_size=canvas_size)
+    random.seed(seed)
+    params = base_gen._generate_character_params()
 
     # Generate animation
     anim_gen = AnimationGenerator(canvas_size=canvas_size)
@@ -138,6 +156,7 @@ def cmd_batch(args: argparse.Namespace) -> int:
     canvas_size = (args.size, args.size)
     palette = args.palette or "rotting"
     output_dir = args.output_dir or f"rotborn_batch_{palette}_{args.size}x{args.size}_{args.count}/"
+    os.makedirs(output_dir, exist_ok=True)
 
     safe_print(f"Rotborn Recursion Engine - Batch generation")
     safe_print(f"  Count: {args.count}")
@@ -174,8 +193,8 @@ Examples:
                             default=None, help="Faction (purified/rotborn/architects/system)")
     gen_parser.add_argument("--palette", choices=get_palette_names(),
                             default=None, help="Trauma palette")
-    gen_parser.add_argument("--count", type=int, default=10, help="Number of sprites")
-    gen_parser.add_argument("--size", type=int, default=32, help="Canvas size (square)")
+    gen_parser.add_argument("--count", type=_positive_int, default=10, help="Number of sprites")
+    gen_parser.add_argument("--size", type=_positive_int, default=32, help="Canvas size (square)")
     gen_parser.add_argument("--seed", type=int, default=None, help="Base seed")
     gen_parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
     gen_parser.set_defaults(func=cmd_generate)
@@ -186,7 +205,7 @@ Examples:
                              default="twitch", help="Animation type")
     anim_parser.add_argument("--faction", choices=list(FACTION_GENERATORS.keys()),
                              default=None, help="Faction")
-    anim_parser.add_argument("--size", type=int, default=32, help="Canvas size")
+    anim_parser.add_argument("--size", type=_positive_int, default=32, help="Canvas size")
     anim_parser.add_argument("--seed", type=int, default=None, help="Seed")
     anim_parser.add_argument("--apng", action="store_true", help="Also export APNG")
     anim_parser.add_argument("--output-dir", type=str, default=None, help="Output directory")
@@ -194,9 +213,9 @@ Examples:
 
     # batch
     batch_parser = subparsers.add_parser("batch", help="Batch generate with uniqueness checking")
-    batch_parser.add_argument("--count", type=int, required=True, help="Number of sprites")
+    batch_parser.add_argument("--count", type=_positive_int, required=True, help="Number of sprites")
     batch_parser.add_argument("--palette", choices=get_palette_names(), default="rotting")
-    batch_parser.add_argument("--size", type=int, default=32, help="Canvas size")
+    batch_parser.add_argument("--size", type=_positive_int, default=32, help="Canvas size")
     batch_parser.add_argument("--output-dir", type=str, default=None)
     batch_parser.add_argument("--no-metadata", action="store_true")
     batch_parser.set_defaults(func=cmd_batch)
