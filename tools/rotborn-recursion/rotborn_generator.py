@@ -73,20 +73,29 @@ def cmd_generate(args: argparse.Namespace) -> int:
     safe_print("")
 
     generated = 0
-    base_seed = args.seed if args.seed is not None else random.randint(0, 2**31)
+    # Use randrange for strict [0, 2**31) seed domain; randint(0, 2**31) is
+    # inclusive on the upper bound and can emit 0x80000000, which straddles
+    # the int32 signed/unsigned boundary for downstream metadata consumers.
+    base_seed = args.seed if args.seed is not None else random.randrange(2**31)
     # Hoist loop-invariant progress step computation out of the hot loop.
     progress_step = max(1, args.count // 10)
 
-    for i in range(args.count):
-        seed = base_seed + i
+    # Hoist generator instantiation out of the hot loop. Both the faction
+    # wrappers and PureCharacterGenerator re-seed the RNG per call and are
+    # stateless across seeds, so a single instance can service the whole run
+    # and amortises palette/scale setup (O(N) -> O(1) constructors).
+    if args.faction:
+        faction_gen = get_faction_generator(args.faction, canvas_size=canvas_size)
+        gen_fn = lambda s: faction_gen.generate(seed=s)
+    else:
+        pure_gen = PureCharacterGenerator(
+            canvas_size=canvas_size,
+            palette=args.palette or "rotting",
+        )
+        gen_fn = lambda s: pure_gen.generate_character(seed=s)
 
-        if args.faction:
-            gen = get_faction_generator(args.faction, canvas_size=canvas_size)
-            sprite = gen.generate(seed=seed)
-        else:
-            palette = args.palette or "rotting"
-            gen = PureCharacterGenerator(canvas_size=canvas_size, palette=palette)
-            sprite = gen.generate_character(seed=seed)
+    for i in range(args.count):
+        sprite = gen_fn(base_seed + i)
 
         filename = f"rotborn_{i:06d}.png"
         filepath = os.path.join(output_dir, filename)
@@ -106,7 +115,7 @@ def cmd_animate(args: argparse.Namespace) -> int:
     output_dir = args.output_dir or f"rotborn_anim_{args.animation}_{args.size}x{args.size}/"
     os.makedirs(output_dir, exist_ok=True)
 
-    seed = args.seed if args.seed is not None else random.randint(0, 2**31)
+    seed = args.seed if args.seed is not None else random.randrange(2**31)
 
     safe_print(f"Rotborn Recursion Engine - Animating ({args.animation})")
     safe_print(f"  Faction: {args.faction or 'random'}")
@@ -223,7 +232,33 @@ Examples:
     return parser
 
 
-if __name__ == "__main__":
+def main(argv: Optional[List[str]] = None) -> int:
+    """Console-script entry point.
+
+    Declared in pyproject.toml as ``rotborn = "rotborn_generator:main"``.
+    Accepts an optional argv list so the module is callable from in-process
+    test harnesses (``main(["generate", "--count", "1"])``) without having to
+    mutate ``sys.argv``.
+
+    Returns the integer exit code from the dispatched subcommand. Handles
+    ``KeyboardInterrupt`` with POSIX exit code 130 and swallows
+    ``BrokenPipeError`` (exit 0) so piping output into ``head``/``less`` no
+    longer dumps a traceback.
+    """
     parser = build_parser()
-    args = parser.parse_args()
-    sys.exit(args.func(args))
+    args = parser.parse_args(argv)
+    try:
+        return args.func(args)
+    except KeyboardInterrupt:
+        safe_print("\nInterrupted.")
+        return 130
+    except BrokenPipeError:
+        try:
+            sys.stdout.flush()
+        except Exception:
+            pass
+        return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
